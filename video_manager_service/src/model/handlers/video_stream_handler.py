@@ -2,7 +2,7 @@ import cv2
 import os
 import logging
 from numpy import ndarray
-from src.infrastructure.interfaces.handlers.ivideo_stream_handler import IVideoStreamHandler
+from infrastructure.interfaces.handlers.ivideo_stream_handler import IVideoStreamHandler
 from infrastructure.factories.logger_factory import LoggerFactory
 from globals.consts.const_strings import ConstStrings
 from globals.consts.logger_messages import LoggerMessages
@@ -30,9 +30,12 @@ class VideoStreamHandler(IVideoStreamHandler):
     def write_frame(self, frame: ndarray) -> None:
         if frame is None:
             return
+        
+        # Resize to target dimensions
+        resized = cv2.resize(frame, (self._frame_width, self._frame_height))
 
-        if self._writer.isOpened():
-            self._writer.write(frame)
+        if self._writer and self._writer.isOpened():
+            self._writer.write(resized)
         else:
             self._logger.log(ConstStrings.LOG_NAME_ERROR,
                              LoggerMessages.WRITER_NOT_OPENED.format(self._video_id), level=logging.ERROR)
@@ -62,13 +65,30 @@ class VideoStreamHandler(IVideoStreamHandler):
         source_width = int(self._cap.get(cv2.CAP_PROP_FRAME_WIDTH))
         source_height = int(self._cap.get(cv2.CAP_PROP_FRAME_HEIGHT))
         
+        # Log pipeline for debugging
+        self._logger.log(ConstStrings.LOG_NAME_DEBUG,
+                         f"GStreamer pipeline: {video_writer_pipeline}")
+        
         self._writer = cv2.VideoWriter(
             video_writer_pipeline,
-            0,  # VIDEO_FOURCC = 0 (from Consts)
+            cv2.CAP_GSTREAMER,
             30,  # VIDEO_FPS = 30 (from Consts)
-            (source_width, source_height),  # Use source video size
+            (source_width, source_height),
+            True  # isColor
         )
         
+        if not self._writer.isOpened():
+            # Try simpler approach - write to raw file
+            self._logger.log(ConstStrings.LOG_NAME_ERROR,
+                             "GStreamer pipeline failed, using raw file writer", level=logging.ERROR)
+            shm_path = f"/dev/shm/video{self._video_id}.avi"
+            self._writer = cv2.VideoWriter(
+                shm_path,
+                cv2.VideoWriter_fourcc(*'MJPG'),
+                30,
+                (self._frame_width, self._frame_height)
+            )
+            
         if not self._writer.isOpened():
             raise ValueError(f"Cannot open shared memory writer for video {self._video_id}")
             

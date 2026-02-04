@@ -1,0 +1,27 @@
+2026-02-04 14:48:57,484 - DEBUG - Opened video: videos/video1.mp4
+2026-02-04 14:48:58,169 - DEBUG - Opened video: videos/video1.mp4
+2026-02-04 14:48:58,696 - DEBUG - Opened video: videos/video1.mp4
+2026-02-04 14:48:59,434 - DEBUG - Opened video: videos/video1.mp4
+2026-02-04 14:49:00,654 - DEBUG - Opened video: videos/video1.mp4
+2026-02-04 14:49:02,697 - DEBUG - Opened video: videos/video1.mp4
+2026-02-04 14:49:06,342 - DEBUG - Opened video: videos/video1.mp4
+2026-02-04 14:49:13,150 - DEBUG - Opened video: videos/video1.mp4
+2026-02-04 14:49:26,346 - DEBUG - Opened video: videos/video1.mp4
+2026-02-04 14:49:52,296 - DEBUG - Opened video: videos/video1.mp4
+2026-02-04 15:01:44,627 - DEBUG - Opened video: videos/video1.mp4
+2026-02-04 15:01:45,316 - DEBUG - Opened video: videos/video1.mp4
+2026-02-04 15:01:45,991 - DEBUG - Opened video: videos/video1.mp4
+2026-02-04 15:01:46,835 - DEBUG - Opened video: videos/video1.mp4
+2026-02-04 15:01:48,028 - DEBUG - Opened video: videos/video1.mp4
+2026-02-04 15:01:50,059 - DEBUG - Opened video: videos/video1.mp4
+2026-02-04 15:01:53,675 - DEBUG - Opened video: videos/video1.mp4
+2026-02-04 15:02:00,511 - DEBUG - Opened video: videos/video1.mp4
+2026-02-04 15:02:13,728 - DEBUG - Opened video: videos/video1.mp4
+2026-02-04 15:02:39,670 - DEBUG - Opened video: videos/video1.mp4
+2026-02-04 15:03:31,248 - DEBUG - Opened video: videos/video1.mp4
+2026-02-04 15:04:31,728 - DEBUG - Opened video: videos/video1.mp4
+2026-02-04 15:05:32,093 - DEBUG - Opened video: videos/video1.mp4
+2026-02-04 15:06:14,499 - DEBUG - Opened video: videos/video1.mp4
+2026-02-04 15:06:14,500 - DEBUG - GStreamer pipeline: appsrc is-live=true do-timestamp=true ! video/x-raw,format=BGR,width=1920,height=1080,framerate=30/1 ! videoconvert ! videoscale ! video/x-raw,format=I420,width=1280,height=720 ! shmsink socket-path=/dev/shm/video0 sync=false wait-for-connection=false shm-size=200000000
+2026-02-04 15:06:14,501 - DEBUG - Shared memory writer ready: /dev/shm/video0
+2026-02-04 15:06:14,501 - DEBUG - Started 1 video streams

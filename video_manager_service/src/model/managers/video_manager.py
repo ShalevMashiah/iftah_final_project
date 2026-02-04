@@ -4,8 +4,8 @@ import time
 import logging
 from typing import List, Dict
 
-from src.infrastructure.interfaces.managers.ivideo_manager import IVideoManager
-from src.infrastructure.factories.handler_factory import HandlerFactory
+from infrastructure.interfaces.managers.ivideo_manager import IVideoManager
+from infrastructure.factories.handler_factory import HandlerFactory
 from infrastructure.factories.logger_factory import LoggerFactory
 from globals.consts.const_strings import ConstStrings
 from globals.consts.logger_messages import LoggerMessages

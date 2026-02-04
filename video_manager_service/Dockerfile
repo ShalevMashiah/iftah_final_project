@@ -1,13 +1,11 @@
 FROM ubuntu:22.04
 
 ENV DEBIAN_FRONTEND=noninteractive
-ENV PYTHONPATH="/usr/local/lib/python3.10/site-packages:/usr/lib/python3.10/site-packages:$PYTHONPATH"
 
 # Install Python and basic dependencies
 RUN apt-get update && apt-get install -y \
     python3.10 \
     python3-pip \
-    python3-opencv \
     && ln -s /usr/bin/python3 /usr/bin/python \
     && rm -rf /var/lib/apt/lists/*
 
@@ -20,6 +18,9 @@ RUN apt-get update && apt-get install -y \
     gstreamer1.0-plugins-ugly \
     gstreamer1.0-libav \
     libgstreamer1.0-dev \
+    libgstreamer-plugins-base1.0-dev \
+    python3-gst-1.0 \
+    gir1.2-gstreamer-1.0 \
     && rm -rf /var/lib/apt/lists/*
 
 # Set working directory

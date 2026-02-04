@@ -1,5 +1,5 @@
-from src.infrastructure.interfaces.managers.ivideo_manager import IVideoManager
-from src.models.managers.video_manager import VideoManager
+from infrastructure.interfaces.managers.ivideo_manager import IVideoManager
+from model.managers.video_manager import VideoManager
 
 
 class ManagerFactory:

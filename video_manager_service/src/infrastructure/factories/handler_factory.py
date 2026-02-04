@@ -1,5 +1,5 @@
-from src.infrastructure.interfaces.handlers.ivideo_stream_handler import IVideoStreamHandler
-from src.models.handlers.video_stream_handler import VideoStreamHandler
+from infrastructure.interfaces.handlers.ivideo_stream_handler import IVideoStreamHandler
+from model.handlers.video_stream_handler import VideoStreamHandler
 
 
 class HandlerFactory:
