@@ -45,6 +45,7 @@ class ConstStrings:
 
     # ? Log
     LOG_NAME_DEBUG = "debug"
+    LOG_NAME_ERROR = "error"
     LOG_ENV = "LOG_FILE_PATH"
     LOG_FILEPATH = "./logs/{}_{}.log"
     LOG_MODE = "a"

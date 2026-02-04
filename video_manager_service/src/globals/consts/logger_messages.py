@@ -9,3 +9,6 @@ class LoggerMessages:
     KAFKA_TOPIC_ALREADY_CONSUMING = "Already consuming topic: {}"
     KAFKA_TOPIC_NOT_EXIST = "Topic Not Exist"
     EXAMPLE_PRINT_CONSUMER_MSG = ", message is: {}"
+    WRITER_NOT_OPENED = "Error: Writer not opened for video {}"
+    VIDEO_OPENED = "Opened video: {}"
+    SHM_WRITER_READY = "Shared memory writer ready: /dev/shm/video{}"
