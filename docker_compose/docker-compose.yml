@@ -1,0 +1,55 @@
+version: '3.8'
+
+services:
+  # Video Manager Service - Reads video and streams frames to shared memory
+  video-manager:
+    build:
+      context: ../video_manager_service
+      dockerfile: Dockerfile
+    container_name: video-manager
+    environment:
+      - VIDEO_PATH=/videos/video1.mp4
+      - SHARED_MEMORY_NAME=video_frames_shm
+      - VIDEO_WIDTH=1920
+      - VIDEO_HEIGHT=1080
+      - LOG_FILE_PATH=/app/logs/video_manager.log
+    volumes:
+      - ../videos:/videos:ro
+      - ../logs:/app/logs
+    command: python3 /app/src/main.py
+    networks:
+      - app-network
+    ipc: shareable
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "python3", "-c", "import os; exit(0 if os.path.exists('/dev/shm/video_frames_shm') else 1)"]
+      interval: 10s
+      timeout: 5s
+      retries: 3
+
+  # Algorithm Service - Reads frames from shared memory and processes them
+  algorithm-service:
+    build:
+      context: ../algorithm_service
+      dockerfile: Dockerfile
+    container_name: algorithm-service
+    depends_on:
+      video-manager:
+        condition: service_healthy
+    environment:
+      - SHARED_MEMORY_NAME=video_frames_shm
+      - VIDEO_WIDTH=1920
+      - VIDEO_HEIGHT=1080
+      - LOG_FILE_PATH=/app/logs/algorithm.log
+      - DETECTION_ENABLED=true
+      - DETECTION_TYPE=face
+    volumes:
+      - ../logs:/app/logs
+    networks:
+      - app-network
+    ipc: "container:video-manager"
+    restart: unless-stopped
+
+networks:
+  app-network:
+    driver: bridge

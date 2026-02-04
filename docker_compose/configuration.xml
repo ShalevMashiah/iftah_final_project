@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configuration>
+
+    <kafka_configuration>
+
+        <bootstrap_servers>kafka:9092</bootstrap_servers>
+
+        <topics>
+            <topic>example_topic</topic>
+            <topic>another_topic</topic>
+            <topic>broadcast_topic</topic>
+        </topics>
+
+    </kafka_configuration>
+
+</configuration>

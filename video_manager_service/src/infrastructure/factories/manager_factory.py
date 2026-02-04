@@ -1,23 +1,21 @@
-from infrastructure.factories.infrastructure_factory import InfrastructureFactory
-from globals.consts.const_strings import ConstStrings
-from infrastructure.interfaces.iexample_manager import IExampleManager
-from infrastructure.interfaces.izmq_server_manager import IZmqServerManager
-from model.managers.example_manager import ExampleManager
-from infrastructure.interfaces.ilogger_manager import ILoggerManager
+from src.infrastructure.interfaces.managers.ivideo_manager import IVideoManager
+from src.models.managers.video_manager import VideoManager
 
 
 class ManagerFactory:
     @staticmethod
-    def create_example_manager() -> IExampleManager:
-        config_manager = InfrastructureFactory.create_config_manager(
-            ConstStrings.GLOBAL_CONFIG_PATH)
-        return ExampleManager(config_manager, InfrastructureFactory.create_kafka_manager(config_manager))
-
+    def create_video_manager(videos_config: list) -> IVideoManager:
+        return VideoManager(videos_config)
+    
     @staticmethod
-    def create_example_zmq_manager() -> IZmqServerManager:
-        return InfrastructureFactory.create_zmq_server_manager()
-
-    @staticmethod
-    def create_all():
-        ManagerFactory.create_example_manager()
-        ManagerFactory.create_example_zmq_manager()
+    def create_all() -> None:
+        # Configure your video files here
+        videos_config = [
+            {
+                "video_id": 0,
+                "video_path": "videos/video1.mp4"
+            }
+        ]
+        
+        video_manager = ManagerFactory.create_video_manager(videos_config)
+        video_manager.start()

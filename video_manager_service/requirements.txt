@@ -1,4 +1,2 @@
-kafka-python
-fuzzywuzzy
-python-Levenshtein
-zmq
+opencv-python
+numpy
