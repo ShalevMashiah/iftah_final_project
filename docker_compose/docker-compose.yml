@@ -21,6 +21,22 @@ services:
     networks:
       - app-network
     restart: unless-stopped
+  
+  # Algorithm Service - Reads frames from shared memory and applies detection
+  algorithm-service:
+    build:
+      context: ../algorithm_service
+      dockerfile: Dockerfile
+    container_name: algorithm-service
+    depends_on:
+      - video-manager
+    environment:
+      - LOG_FILE_PATH=/app/logs/algorithm.log
+    volumes:
+      - ../logs:/app/logs
+      - /dev/shm:/dev/shm
+    network_mode: host
+    restart: unless-stopped
 
 networks:
   app-network:

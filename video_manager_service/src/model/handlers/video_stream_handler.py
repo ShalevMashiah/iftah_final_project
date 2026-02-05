@@ -21,10 +21,6 @@ class VideoStreamHandler(IVideoStreamHandler):
 
     def read_frame(self) -> ndarray:
         ret, frame = self._cap.read()
-        if not ret:
-            # Loop video when it ends
-            self._cap.set(cv2.CAP_PROP_POS_FRAMES, 0)
-            ret, frame = self._cap.read()
         return frame if ret else None
 
     def write_frame(self, frame: ndarray) -> None:
