@@ -146,6 +146,13 @@ class AlgorithmManager(IAlgorithmManager):
                     f"Video {video_index}: Read {frame_count} frames from shared memory, shape: {frame.shape}"
                 )
 
+            # Save latest frame as JPEG for GUI display
+            try:
+                output_path = f"/app/logs/stream_{video_index + 1}.jpg"
+                cv2.imwrite(output_path, frame, [cv2.IMWRITE_JPEG_QUALITY, 85])
+            except Exception as e:
+                self._logger.log(ConstStrings.LOG_NAME_DEBUG, f"Failed to save frame: {e}")
+
             q = self._frame_queues[video_index]
             if q.full():
                 try:

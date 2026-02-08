@@ -12,18 +12,18 @@ class VideoStreamsBloc extends Bloc<VideoStreamsEvent, VideoStreamsState> {
     on<VideoStreamsEvent>((event, emit) {});
 
     on<LoadStreamsEvent>((event, emit) {
-      // Initialize with default streams
+      // Initialize with default streams pointing to shared image files
       final streams = [
         const VideoStream(
           id: '1',
           title: 'Video Stream 1',
-          streamUrl: 'http://localhost:8080/stream/1',
+          streamUrl: '/app/logs/stream_1.jpg',
           isActive: true,
         ),
         const VideoStream(
           id: '2',
           title: 'Video Stream 2',
-          streamUrl: 'http://localhost:8080/stream/2',
+          streamUrl: '/app/logs/stream_2.jpg',
           isActive: true,
         ),
       ];

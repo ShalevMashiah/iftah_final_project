@@ -1,3 +1,6 @@
+import 'dart:async';
+import 'dart:io';
+import 'dart:typed_data';
 import 'package:flutter/material.dart';
 import 'package:flutter_to_do_list/domain/model/data_classes/video_stream.dart';
 
@@ -14,6 +17,28 @@ class VideoStreamWidget extends StatefulWidget {
 }
 
 class _VideoStreamWidgetState extends State<VideoStreamWidget> {
+  Timer? _refreshTimer;
+  int _refreshKey = 0;
+
+  @override
+  void initState() {
+    super.initState();
+    // Refresh image every ~33ms for 30 FPS (matching algorithm service frame rate)
+    _refreshTimer = Timer.periodic(const Duration(milliseconds: 33), (timer) {
+      if (mounted) {
+        setState(() {
+          _refreshKey++;
+        });
+      }
+    });
+  }
+
+  @override
+  void dispose() {
+    _refreshTimer?.cancel();
+    super.dispose();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -88,22 +113,52 @@ class _VideoStreamWidgetState extends State<VideoStreamWidget> {
       aspectRatio: 16 / 9,
       child: Container(
         color: Colors.black,
-        child: widget.stream.isActive
-            ? Image.network(
-                widget.stream.streamUrl,
-                fit: BoxFit.contain,
-                loadingBuilder: (context, child, loadingProgress) {
-                  if (loadingProgress == null) return child;
-                  return const Center(
-                    child: CircularProgressIndicator(color: Colors.green),
-                  );
-                },
-                errorBuilder: (context, error, stackTrace) {
-                  return _buildErrorWidget();
-                },
-              )
-            : _buildInactiveWidget(),
+        child: widget.stream.isActive ? _buildVideoFrame() : _buildInactiveWidget(),
       ),
+    );
+  }
+
+  Widget _buildVideoFrame() {
+    final imagePath = widget.stream.streamUrl;
+    final file = File(imagePath);
+
+    // Read file bytes directly and create image from memory
+    // This bypasses Flutter's file image cache
+    return FutureBuilder<Uint8List>(
+      key: ValueKey(_refreshKey),
+      future: file.readAsBytes(),
+      builder: (context, snapshot) {
+        if (snapshot.connectionState == ConnectionState.done && 
+            snapshot.hasData && 
+            snapshot.data!.isNotEmpty) {
+          return Image.memory(
+            snapshot.data!,
+            fit: BoxFit.contain,
+            gaplessPlayback: true,
+          );
+        }
+        
+        if (snapshot.hasError) {
+          return Center(
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                const Icon(Icons.image_not_supported, color: Colors.orange, size: 48),
+                const SizedBox(height: 8),
+                Text(
+                  'Waiting for frames...',
+                  style: const TextStyle(color: Colors.white70),
+                ),
+              ],
+            ),
+          );
+        }
+        
+        // Loading state
+        return const Center(
+          child: CircularProgressIndicator(),
+        );
+      },
     );
   }
 

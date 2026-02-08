@@ -50,6 +50,7 @@ services:
       - LIBGL_ALWAYS_SOFTWARE=1
     volumes:
       - /tmp/.X11-unix:/tmp/.X11-unix:rw
+      - ../logs:/app/logs
     network_mode: host
     restart: unless-stopped
 
