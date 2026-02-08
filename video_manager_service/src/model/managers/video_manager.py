@@ -81,8 +81,8 @@ class VideoManager(IVideoManager):
             handler.write_frame(frame)
 
     def _remove_shared_memory_files(self) -> None:
-        file_prefixes = ["video", "shmpipe"]  # Changed from ["cam", "shmpipe"]
-        shm_path = "/dev/shm/"
+        file_prefixes = ["cam", "shmpipe"]
+        shm_path = ConstStrings.SHARED_MEMORY_PATH
         
         if not os.path.exists(shm_path):
             return

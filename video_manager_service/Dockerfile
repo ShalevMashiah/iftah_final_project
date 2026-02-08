@@ -17,11 +17,13 @@ RUN apt-get update && apt-get install -y \
     gstreamer1.0-plugins-bad \
     gstreamer1.0-plugins-ugly \
     gstreamer1.0-libav \
+    libgstreamer1.0-0 \
+    libgstreamer-plugins-base1.0-0 \
     libgstreamer1.0-dev \
     libgstreamer-plugins-base1.0-dev \
-    python3-gst-1.0 \
-    gir1.2-gstreamer-1.0 \
+    python3-opencv \
     && rm -rf /var/lib/apt/lists/*
+
 
 # Set working directory
 WORKDIR /app

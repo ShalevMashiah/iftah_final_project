@@ -1,7 +1,4 @@
-version: '3.8'
-
 services:
-  # Video Manager Service - Reads video and streams frames to shared memory
   video-manager:
     build:
       context: ../video_manager_service
@@ -11,18 +8,16 @@ services:
       - VIDEO_SOURCE=/app/videos/video1.mp4
       - VIDEO_WIDTH=640
       - VIDEO_HEIGHT=480
-      - VIDEO_SHM_PATH=/dev/shm/video_frame.bgr
+      - VIDEO_SHM_PATH=/dev/shm/video0
       - LOG_FILE_PATH=/app/logs/video_manager.log
     volumes:
       - ../videos:/app/videos:ro
       - ../logs:/app/logs
       - /dev/shm:/dev/shm
     command: python src/main.py
-    networks:
-      - app-network
+    network_mode: host
     restart: unless-stopped
-  
-  # Algorithm Service - Reads frames from shared memory and applies detection
+
   algorithm-service:
     build:
       context: ../algorithm_service
@@ -32,12 +27,14 @@ services:
       - video-manager
     environment:
       - LOG_FILE_PATH=/app/logs/algorithm.log
+      - DISPLAY=${DISPLAY}
+      - QT_X11_NO_MITSHM=1
+      - ENABLE_IMSHOW=1
     volumes:
       - ../logs:/app/logs
       - /dev/shm:/dev/shm
+      - /tmp/.X11-unix:/tmp/.X11-unix:rw
     network_mode: host
     restart: unless-stopped
 
-networks:
-  app-network:
-    driver: bridge
+  

@@ -5,6 +5,7 @@ from numpy import ndarray
 from infrastructure.interfaces.handlers.ivideo_stream_handler import IVideoStreamHandler
 from infrastructure.factories.logger_factory import LoggerFactory
 from globals.consts.const_strings import ConstStrings
+from globals.consts.consts import Consts
 from globals.consts.logger_messages import LoggerMessages
 
 
@@ -57,19 +58,19 @@ class VideoStreamHandler(IVideoStreamHandler):
 
     def _init_writer(self) -> None:
         video_writer_pipeline = self._construct_video_writer_pipeline()
-        
-        source_width = int(self._cap.get(cv2.CAP_PROP_FRAME_WIDTH))
-        source_height = int(self._cap.get(cv2.CAP_PROP_FRAME_HEIGHT))
-        
+
         # Log pipeline for debugging
         self._logger.log(ConstStrings.LOG_NAME_DEBUG,
                          f"GStreamer pipeline: {video_writer_pipeline}")
-        
+
+        # We write frames resized to (self._frame_width, self._frame_height)
+        frame_size = (self._frame_width, self._frame_height)
+
         self._writer = cv2.VideoWriter(
             video_writer_pipeline,
             cv2.CAP_GSTREAMER,
-            30,  # VIDEO_FPS = 30 (from Consts)
-            (source_width, source_height),
+            self._frame_rate,
+            frame_size,
             True  # isColor
         )
         
@@ -77,7 +78,7 @@ class VideoStreamHandler(IVideoStreamHandler):
             # Try simpler approach - write to raw file
             self._logger.log(ConstStrings.LOG_NAME_ERROR,
                              "GStreamer pipeline failed, using raw file writer", level=logging.ERROR)
-            shm_path = f"/dev/shm/video{self._video_id}.avi"
+            shm_path = f"/dev/shm/cam{self._video_id}.avi"
             self._writer = cv2.VideoWriter(
                 shm_path,
                 cv2.VideoWriter_fourcc(*'MJPG'),
@@ -92,17 +93,13 @@ class VideoStreamHandler(IVideoStreamHandler):
                          LoggerMessages.SHM_WRITER_READY.format(self._video_id))
 
     def _construct_video_writer_pipeline(self) -> str:
-        source_width = int(self._cap.get(cv2.CAP_PROP_FRAME_WIDTH))
-        source_height = int(self._cap.get(cv2.CAP_PROP_FRAME_HEIGHT))
-        
-        shared_memory_path = f"/dev/shm/video{self._video_id}"
-        
-        pipeline = (
-            "appsrc is-live=true do-timestamp=true ! "
-            f"video/x-raw,format=BGR,width={source_width},height={source_height},framerate={self._frame_rate}/1 ! "
-            "videoconvert ! videoscale ! "
-            f"video/x-raw,format=I420,width={self._frame_width},height={self._frame_height} ! "
-            f"shmsink socket-path={shared_memory_path} sync=false wait-for-connection=false shm-size=200000000"
+        shared_memory_path = ConstStrings.SHARED_MEMORY_CAM_PATH.format(camera_id=self._video_id)
+
+        return ConstStrings.SHARED_MEMORY_PIPELINE.format(
+            frame_height=Consts.ALGO_FRAME_HEIGHT,
+            frame_width=Consts.ALGO_FRAME_WIDTH,
+            frame_rate=self._frame_rate,
+            scaled_width=self._frame_width,
+            scaled_height=self._frame_height,
+            shared_memory_path=shared_memory_path,
         )
-        
-        return pipeline
