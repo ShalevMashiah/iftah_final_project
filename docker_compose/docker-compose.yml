@@ -37,4 +37,20 @@ services:
     network_mode: host
     restart: unless-stopped
 
+  gui-service:
+    build:
+      context: ../gui_service
+      dockerfile: Dockerfile
+    container_name: gui-service
+    environment:
+      - DISPLAY=:1
+      - QT_X11_NO_MITSHM=1
+      - XDG_RUNTIME_DIR=/tmp/runtime-root
+      - NO_AT_BRIDGE=1
+      - LIBGL_ALWAYS_SOFTWARE=1
+    volumes:
+      - /tmp/.X11-unix:/tmp/.X11-unix:rw
+    network_mode: host
+    restart: unless-stopped
+
   
