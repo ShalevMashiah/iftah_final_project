@@ -1,6 +1,7 @@
 import cv2
 import os
 import logging
+import time
 from numpy import ndarray
 from infrastructure.interfaces.handlers.ivideo_stream_handler import IVideoStreamHandler
 from infrastructure.factories.logger_factory import LoggerFactory
@@ -33,6 +34,8 @@ class VideoStreamHandler(IVideoStreamHandler):
 
         if self._writer and self._writer.isOpened():
             self._writer.write(resized)
+            # Pace writes to approximate the configured frame rate
+            time.sleep(1.0 / max(1.0, float(self._frame_rate)))
         else:
             self._logger.log(ConstStrings.LOG_NAME_ERROR,
                              LoggerMessages.WRITER_NOT_OPENED.format(self._video_id), level=logging.ERROR)

@@ -9,3 +9,11 @@ class Consts:
     # SHM reader open wait times (seconds)
     SHM_OPEN_GST_WAIT_SECONDS = 5
     SHM_OPEN_AVI_WAIT_SECONDS = 10
+    
+    # Motion detection
+    MOTION_BG_HISTORY = 300
+    MOTION_BG_VAR_THRESHOLD = 32
+    MOTION_DETECT_SHADOWS = True
+    MOTION_MIN_AREA = 800
+    MOTION_DILATE_ITER = 2
+    MOTION_KERNEL_SIZE = 3

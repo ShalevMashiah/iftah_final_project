@@ -19,7 +19,6 @@ class ShmReaderHandler(IShmReaderHandler):
         self._logger = LoggerFactory.get_logger_manager()
 
     def start(self) -> None:
-        # Try GStreamer shmsrc first (caps must match writer I420 size)
         pipeline = ConstStrings.SHARED_MEMORY_READER_PIPELINE.format(
             shared_memory_path=self._shm_path,
             frame_width=self._width,
@@ -44,7 +43,6 @@ class ShmReaderHandler(IShmReaderHandler):
             self._cap = None
             time.sleep(1)
 
-        # Fallback: try reading from .avi file (when GStreamer pipeline fails)
         self._logger.log(
             ConstStrings.LOG_NAME_DEBUG,
             f"GStreamer shmsrc failed, trying file fallback: {self._shm_path}.avi"

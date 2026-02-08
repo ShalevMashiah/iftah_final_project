@@ -1,5 +1,6 @@
 import os
 import cv2
+from globals.consts.consts import Consts
 import threading
 import time
 from queue import Queue, Empty
@@ -150,4 +151,4 @@ class AlgorithmManager(IAlgorithmManager):
                     break
 
         if self._enable_imshow:
-            cv2.waitKey(1)
+            cv2.waitKey(max(1, int(1000 / max(1, Consts.ALGO_FRAME_RATE))))

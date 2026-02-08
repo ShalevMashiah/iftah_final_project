@@ -71,3 +71,9 @@ class ConstStrings:
         "videoconvert ! video/x-raw,format=BGR ! "
         "appsink drop=true sync=false"
     )
+
+
+
+    MOTION_STARTING = "Motion detection enabled"
+    MOTION_REGION_COUNT = "Video {}: motion regions: {}"
+    MOTION_ERROR = "Motion detection error: {}"
