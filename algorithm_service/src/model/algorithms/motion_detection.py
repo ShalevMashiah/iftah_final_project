@@ -5,6 +5,7 @@ import numpy as np
 
 from globals.consts.consts import Consts
 from infrastructure.factories.logger_factory import LoggerFactory
+from globals.consts.const_strings import ConstStrings
 from globals.consts.logger_messages import LoggerMessages
 
 
@@ -40,7 +41,7 @@ class MotionDetectionAlgorithm:
         self._bg_subtractor = cv2.createBackgroundSubtractorMOG2(history=self._history, varThreshold=self._threshold, detectShadows=self._detect_shadows)
         self._kernel = np.ones((3, 3), np.uint8)
         try:
-            self._logger.log("debug", f"MotionDetectionAlgorithm initialized: min_area={self._min_contour_area} threshold={self._threshold} history={self._history} shadows={self._detect_shadows}")
+            self._logger.log(ConstStrings.LOG_NAME_DEBUG, f"MotionDetectionAlgorithm initialized: min_area={self._min_contour_area} threshold={self._threshold} history={self._history} shadows={self._detect_shadows}")
         except Exception:
             pass
 
@@ -82,7 +83,7 @@ class MotionDetectionAlgorithm:
         self._frame_idx += 1
         if regions > 0 and (self._frame_idx % max(1, Consts.ALGO_FRAME_RATE) == 0):
             try:
-                self._logger.log("debug", LoggerMessages.MOTION_REGION_COUNT.format("motion", regions))
+                self._logger.log(ConstStrings.LOG_NAME_DEBUG, LoggerMessages.MOTION_REGION_COUNT.format("motion", regions))
             except Exception:
                 pass
 

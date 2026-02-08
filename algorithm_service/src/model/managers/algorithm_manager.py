@@ -13,7 +13,6 @@ from infrastructure.factories.logger_factory import LoggerFactory
 from globals.consts.const_strings import ConstStrings
 from globals.consts.logger_messages import LoggerMessages
 
-
 class AlgorithmManager(IAlgorithmManager):
     def __init__(self, videos_config: List[Dict]) -> None:
         self._videos_config = videos_config
@@ -23,6 +22,7 @@ class AlgorithmManager(IAlgorithmManager):
         self._process_threads = []
         self._running = True
         self._logger = LoggerFactory.get_logger_manager()
+        self._logger.log(ConstStrings.LOG_NAME_DEBUG, LoggerMessages.MOTION_STARTING)
         # Initialize algorithms per video
         self._algorithms = []
         for video in self._videos_config:
@@ -35,7 +35,7 @@ class AlgorithmManager(IAlgorithmManager):
                 self._logger.log(ConstStrings.LOG_NAME_ERROR, LoggerMessages.MOTION_ERROR.format(e))
                 self._algorithms.append(None)
         
-        self._logger.log(ConstStrings.LOG_NAME_DEBUG, LoggerMessages.MOTION_STARTING)
+        # Motion starting already logged above
         
         # UI settings
         self._enable_imshow = os.environ.get(ConstStrings.ENABLE_IMSHOW_ENV, "0") == "1"
@@ -139,7 +139,7 @@ class AlgorithmManager(IAlgorithmManager):
             
             consecutive_none_count = 0
             frame_count += 1
-
+                
             if frame_count % 30 == 0:
                 self._logger.log(
                     ConstStrings.LOG_NAME_DEBUG,

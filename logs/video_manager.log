@@ -660,3 +660,80 @@
 2026-02-08 12:29:06,520 - DEBUG - GStreamer pipeline: appsrc is-live=true do-timestamp=true ! video/x-raw,format=BGR,width=1280,height=720,framerate=30/1 ! videoconvert ! videoscale ! video/x-raw,format=I420,width=1280,height=720 ! shmsink socket-path=/dev/shm/cam2 sync=false wait-for-connection=false shm-size=200000000
 2026-02-08 12:29:06,521 - DEBUG - Shared memory writer ready: /dev/shm/cam2
 2026-02-08 12:29:06,522 - DEBUG - Started 2 video streams
+2026-02-08 12:37:27,996 - DEBUG - Removed: shmpipe.    1.    1
+2026-02-08 12:37:27,996 - DEBUG - Removed: cam2
+2026-02-08 12:37:27,996 - DEBUG - Removed: shmpipe.    1.    0
+2026-02-08 12:37:27,996 - DEBUG - Removed: cam1
+2026-02-08 12:37:28,018 - DEBUG - Opened video: videos/video1.mp4
+2026-02-08 12:37:28,018 - DEBUG - GStreamer pipeline: appsrc is-live=true do-timestamp=true ! video/x-raw,format=BGR,width=1280,height=720,framerate=30/1 ! videoconvert ! videoscale ! video/x-raw,format=I420,width=1280,height=720 ! shmsink socket-path=/dev/shm/cam1 sync=false wait-for-connection=false shm-size=200000000
+2026-02-08 12:37:28,366 - DEBUG - Shared memory writer ready: /dev/shm/cam1
+2026-02-08 12:37:28,442 - DEBUG - Opened video: videos/video2.mp4
+2026-02-08 12:37:28,442 - DEBUG - GStreamer pipeline: appsrc is-live=true do-timestamp=true ! video/x-raw,format=BGR,width=1280,height=720,framerate=30/1 ! videoconvert ! videoscale ! video/x-raw,format=I420,width=1280,height=720 ! shmsink socket-path=/dev/shm/cam2 sync=false wait-for-connection=false shm-size=200000000
+2026-02-08 12:37:28,444 - DEBUG - Shared memory writer ready: /dev/shm/cam2
+2026-02-08 12:37:28,444 - DEBUG - Started 2 video streams
+2026-02-08 12:39:04,011 - DEBUG - Removed: shmpipe.    1.    1
+2026-02-08 12:39:04,011 - DEBUG - Removed: cam2
+2026-02-08 12:39:04,012 - DEBUG - Removed: shmpipe.    1.    0
+2026-02-08 12:39:04,012 - DEBUG - Removed: cam1
+2026-02-08 12:39:04,035 - DEBUG - Opened video: videos/video1.mp4
+2026-02-08 12:39:04,035 - DEBUG - GStreamer pipeline: appsrc is-live=true do-timestamp=true ! video/x-raw,format=BGR,width=1280,height=720,framerate=30/1 ! videoconvert ! videoscale ! video/x-raw,format=I420,width=1280,height=720 ! shmsink socket-path=/dev/shm/cam1 sync=false wait-for-connection=false shm-size=200000000
+2026-02-08 12:39:04,048 - DEBUG - Shared memory writer ready: /dev/shm/cam1
+2026-02-08 12:39:04,123 - DEBUG - Opened video: videos/video2.mp4
+2026-02-08 12:39:04,123 - DEBUG - GStreamer pipeline: appsrc is-live=true do-timestamp=true ! video/x-raw,format=BGR,width=1280,height=720,framerate=30/1 ! videoconvert ! videoscale ! video/x-raw,format=I420,width=1280,height=720 ! shmsink socket-path=/dev/shm/cam2 sync=false wait-for-connection=false shm-size=200000000
+2026-02-08 12:39:04,124 - DEBUG - Shared memory writer ready: /dev/shm/cam2
+2026-02-08 12:39:04,125 - DEBUG - Started 2 video streams
+2026-02-08 12:43:41,624 - DEBUG - Removed: shmpipe.    1.    1
+2026-02-08 12:43:41,625 - DEBUG - Removed: cam2
+2026-02-08 12:43:41,625 - DEBUG - Removed: shmpipe.    1.    0
+2026-02-08 12:43:41,625 - DEBUG - Removed: cam1
+2026-02-08 12:43:41,647 - DEBUG - Opened video: videos/video1.mp4
+2026-02-08 12:43:41,648 - DEBUG - GStreamer pipeline: appsrc is-live=true do-timestamp=true ! video/x-raw,format=BGR,width=1280,height=720,framerate=30/1 ! videoconvert ! videoscale ! video/x-raw,format=I420,width=1280,height=720 ! shmsink socket-path=/dev/shm/cam1 sync=false wait-for-connection=false shm-size=200000000
+2026-02-08 12:43:41,974 - DEBUG - Shared memory writer ready: /dev/shm/cam1
+2026-02-08 12:43:42,048 - DEBUG - Opened video: videos/video2.mp4
+2026-02-08 12:43:42,048 - DEBUG - GStreamer pipeline: appsrc is-live=true do-timestamp=true ! video/x-raw,format=BGR,width=1280,height=720,framerate=30/1 ! videoconvert ! videoscale ! video/x-raw,format=I420,width=1280,height=720 ! shmsink socket-path=/dev/shm/cam2 sync=false wait-for-connection=false shm-size=200000000
+2026-02-08 12:43:42,050 - DEBUG - Shared memory writer ready: /dev/shm/cam2
+2026-02-08 12:43:42,051 - DEBUG - Started 2 video streams
+2026-02-08 12:44:31,675 - DEBUG - Removed: shmpipe.    1.    1
+2026-02-08 12:44:31,676 - DEBUG - Removed: cam2
+2026-02-08 12:44:31,676 - DEBUG - Removed: shmpipe.    1.    0
+2026-02-08 12:44:31,676 - DEBUG - Removed: cam1
+2026-02-08 12:44:31,696 - DEBUG - Opened video: videos/video1.mp4
+2026-02-08 12:44:31,697 - DEBUG - GStreamer pipeline: appsrc is-live=true do-timestamp=true ! video/x-raw,format=BGR,width=1280,height=720,framerate=30/1 ! videoconvert ! videoscale ! video/x-raw,format=I420,width=1280,height=720 ! shmsink socket-path=/dev/shm/cam1 sync=false wait-for-connection=false shm-size=200000000
+2026-02-08 12:44:31,709 - DEBUG - Shared memory writer ready: /dev/shm/cam1
+2026-02-08 12:44:31,786 - DEBUG - Opened video: videos/video2.mp4
+2026-02-08 12:44:31,786 - DEBUG - GStreamer pipeline: appsrc is-live=true do-timestamp=true ! video/x-raw,format=BGR,width=1280,height=720,framerate=30/1 ! videoconvert ! videoscale ! video/x-raw,format=I420,width=1280,height=720 ! shmsink socket-path=/dev/shm/cam2 sync=false wait-for-connection=false shm-size=200000000
+2026-02-08 12:44:31,788 - DEBUG - Shared memory writer ready: /dev/shm/cam2
+2026-02-08 12:44:31,790 - DEBUG - Started 2 video streams
+2026-02-08 12:45:59,853 - DEBUG - Removed: shmpipe.    1.    1
+2026-02-08 12:45:59,853 - DEBUG - Removed: cam2
+2026-02-08 12:45:59,853 - DEBUG - Removed: shmpipe.    1.    0
+2026-02-08 12:45:59,853 - DEBUG - Removed: cam1
+2026-02-08 12:45:59,875 - DEBUG - Opened video: videos/video1.mp4
+2026-02-08 12:45:59,875 - DEBUG - GStreamer pipeline: appsrc is-live=true do-timestamp=true ! video/x-raw,format=BGR,width=1280,height=720,framerate=30/1 ! videoconvert ! videoscale ! video/x-raw,format=I420,width=1280,height=720 ! shmsink socket-path=/dev/shm/cam1 sync=false wait-for-connection=false shm-size=200000000
+2026-02-08 12:46:00,249 - DEBUG - Shared memory writer ready: /dev/shm/cam1
+2026-02-08 12:46:00,336 - DEBUG - Opened video: videos/video2.mp4
+2026-02-08 12:46:00,336 - DEBUG - GStreamer pipeline: appsrc is-live=true do-timestamp=true ! video/x-raw,format=BGR,width=1280,height=720,framerate=30/1 ! videoconvert ! videoscale ! video/x-raw,format=I420,width=1280,height=720 ! shmsink socket-path=/dev/shm/cam2 sync=false wait-for-connection=false shm-size=200000000
+2026-02-08 12:46:00,338 - DEBUG - Shared memory writer ready: /dev/shm/cam2
+2026-02-08 12:46:00,338 - DEBUG - Started 2 video streams
+2026-02-08 12:46:36,279 - DEBUG - Removed: shmpipe.    1.    1
+2026-02-08 12:46:36,279 - DEBUG - Removed: cam2
+2026-02-08 12:46:36,279 - DEBUG - Removed: shmpipe.    1.    0
+2026-02-08 12:46:36,280 - DEBUG - Removed: cam1
+2026-02-08 12:46:36,302 - DEBUG - Opened video: videos/video1.mp4
+2026-02-08 12:46:36,302 - DEBUG - GStreamer pipeline: appsrc is-live=true do-timestamp=true ! video/x-raw,format=BGR,width=1280,height=720,framerate=30/1 ! videoconvert ! videoscale ! video/x-raw,format=I420,width=1280,height=720 ! shmsink socket-path=/dev/shm/cam1 sync=false wait-for-connection=false shm-size=200000000
+2026-02-08 12:46:36,631 - DEBUG - Shared memory writer ready: /dev/shm/cam1
+2026-02-08 12:46:36,705 - DEBUG - Opened video: videos/video2.mp4
+2026-02-08 12:46:36,705 - DEBUG - GStreamer pipeline: appsrc is-live=true do-timestamp=true ! video/x-raw,format=BGR,width=1280,height=720,framerate=30/1 ! videoconvert ! videoscale ! video/x-raw,format=I420,width=1280,height=720 ! shmsink socket-path=/dev/shm/cam2 sync=false wait-for-connection=false shm-size=200000000
+2026-02-08 12:46:36,707 - DEBUG - Shared memory writer ready: /dev/shm/cam2
+2026-02-08 12:46:36,707 - DEBUG - Started 2 video streams
+2026-02-08 12:54:21,361 - DEBUG - Removed: shmpipe.    1.    1
+2026-02-08 12:54:21,361 - DEBUG - Removed: cam2
+2026-02-08 12:54:21,361 - DEBUG - Removed: shmpipe.    1.    0
+2026-02-08 12:54:21,362 - DEBUG - Removed: cam1
+2026-02-08 12:54:21,383 - DEBUG - Opened video: videos/video1.mp4
+2026-02-08 12:54:21,383 - DEBUG - GStreamer pipeline: appsrc is-live=true do-timestamp=true ! video/x-raw,format=BGR,width=1280,height=720,framerate=30/1 ! videoconvert ! videoscale ! video/x-raw,format=I420,width=1280,height=720 ! shmsink socket-path=/dev/shm/cam1 sync=false wait-for-connection=false shm-size=200000000
+2026-02-08 12:54:21,700 - DEBUG - Shared memory writer ready: /dev/shm/cam1
+2026-02-08 12:54:21,774 - DEBUG - Opened video: videos/video2.mp4
+2026-02-08 12:54:21,774 - DEBUG - GStreamer pipeline: appsrc is-live=true do-timestamp=true ! video/x-raw,format=BGR,width=1280,height=720,framerate=30/1 ! videoconvert ! videoscale ! video/x-raw,format=I420,width=1280,height=720 ! shmsink socket-path=/dev/shm/cam2 sync=false wait-for-connection=false shm-size=200000000
+2026-02-08 12:54:21,776 - DEBUG - Shared memory writer ready: /dev/shm/cam2
+2026-02-08 12:54:21,776 - DEBUG - Started 2 video streams
