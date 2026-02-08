@@ -10,6 +10,7 @@ from infrastructure.interfaces.managers.ialgorithm_manager import IAlgorithmMana
 from infrastructure.factories.handler_factory import HandlerFactory
 from infrastructure.factories.logger_factory import LoggerFactory
 from globals.consts.const_strings import ConstStrings
+from globals.consts.logger_messages import LoggerMessages
 
 
 class AlgorithmManager(IAlgorithmManager):
@@ -21,7 +22,17 @@ class AlgorithmManager(IAlgorithmManager):
         self._process_threads = []
         self._running = True
         self._logger = LoggerFactory.get_logger_manager()
-
+        self._bg_subtractors = [
+                cv2.createBackgroundSubtractorMOG2(
+                    history=Consts.MOTION_BG_HISTORY,
+                    varThreshold=Consts.MOTION_BG_VAR_THRESHOLD,
+                    detectShadows=Consts.MOTION_DETECT_SHADOWS
+            )
+            for _ in range(self._num_videos)
+        ]
+        
+        self._logger.log(ConstStrings.LOG_NAME_DEBUG, LoggerMessages.MOTION_STARTING)
+        
         # UI settings
         self._enable_imshow = os.environ.get(ConstStrings.ENABLE_IMSHOW_ENV, "0") == "1"
         self._display = os.environ.get(ConstStrings.DISPLAY_ENV, "")
@@ -77,7 +88,7 @@ class AlgorithmManager(IAlgorithmManager):
         for thread in self._process_threads:
             thread.join(timeout=1)
 
-        self._logger.log(ConstStrings.LOG_NAME_DEBUG, "Algorithm manager stopped")
+        self._logger.log(ConstStrings.LOG_NAME_DEBUG, LoggerMessages.ALGORITHM_MANAGER_STOPPED)
 
     def _init_readers(self) -> None:
         for video in self._videos_config:
@@ -108,7 +119,34 @@ class AlgorithmManager(IAlgorithmManager):
                     break
                 time.sleep(0.1)
                 continue
+            try:
+                
+                subtractor = self._bg_subtractors[video_index]
+                fg = subtractor.apply(frame)
+                _, mask = cv2.threshold(fg, 244, 255, cv2.THRESH_BINARY)
+                kernel = cv2.getStructuringElement(
+                    cv2.MORPH_RECT,
+                    (Consts.MOTION_KERNEL_SIZE, Consts.MOTION_KERNEL_SIZE)
+                )
+                mask = cv2.dilate(mask, kernel, iterations=Consts.MOTION_DILATE_ITER)
+                contours, _ = cv2.findContours(mask, cv2.RETR_EXTERNAL, cv2.CHAIN_APPROX_SIMPLE)
 
+                regions = 0
+                for c in contours:
+                    if cv2.contourArea(c) < Consts.MOTION_MIN_AREA:
+                        continue
+                    x, y, w, h = cv2.boundingRect(c)
+                    cv2.rectangle(frame, (x, y), (x + w, y + h), (0, 255, 0), 2)
+                    regions += 1
+
+                if regions and frame_count % Consts.ALGO_FRAME_RATE == 0:
+                    self._logger.log(
+                        ConstStrings.LOG_NAME_DEBUG,
+                        LoggerMessages.MOTION_REGION_COUNT.format(video_index, regions)
+                    )
+            except Exception as e:
+                self._logger.log(ConstStrings.LOG_NAME_ERROR, LoggerMessages.MOTION_ERROR.format(e))
+            
             consecutive_none_count = 0
             frame_count += 1
 

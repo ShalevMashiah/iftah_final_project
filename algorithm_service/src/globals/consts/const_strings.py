@@ -50,7 +50,8 @@ class ConstStrings:
     LOG_MODE = "a"
     LOG_FORMATTER = "%(asctime)s - %(levelname)s - %(message)s"
     DATE_TIME_FORMAT = '%Y_%m_%d-%H_%M_%S'
-
+    LOG_NAME_ERROR = "error"
+    
     # Environment variable names
     ENABLE_IMSHOW_ENV = "ENABLE_IMSHOW"
     DISPLAY_ENV = "DISPLAY"

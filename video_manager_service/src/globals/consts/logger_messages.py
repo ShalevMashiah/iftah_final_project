@@ -16,3 +16,4 @@ class LoggerMessages:
     VIDEO_MANAGER_STOPPED = "Video manager stopped"
     SHM_FILE_REMOVED = "Removed: {}"
     SHM_FILE_REMOVAL_FAILED = "Could not remove {}: {}"
+ 

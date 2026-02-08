@@ -9,3 +9,7 @@ class LoggerMessages:
     KAFKA_TOPIC_ALREADY_CONSUMING = "Already consuming topic: {}"
     KAFKA_TOPIC_NOT_EXIST = "Topic Not Exist"
     EXAMPLE_PRINT_CONSUMER_MSG = ", message is: {}"
+    ALGORITHM_MANAGER_STOPPED = "Algorithm manager stopped"
+    ALGORITHM_MANAGER_STARTED = "Algorithm manager started"
+    MOTION_STARTING = "Motion detection enabled"
+    MOTION_ERROR = "Motion detection error: {}"

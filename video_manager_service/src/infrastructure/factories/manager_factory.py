@@ -12,8 +12,12 @@ class ManagerFactory:
         # Configure your video files here
         videos_config = [
             {
-                "video_id": 0,
+                "video_id": 1,
                 "video_path": "videos/video1.mp4"
+            },
+                        {
+                "video_id": 2,
+                "video_path": "videos/video2.mp4"
             }
         ]
         

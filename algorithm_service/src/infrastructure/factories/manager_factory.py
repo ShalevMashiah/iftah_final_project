@@ -24,7 +24,12 @@ class ManagerFactory:
         # Configure video sources to read from shared memory
         videos_config = [
             {
-                "video_id": 0,
+                "video_id": 1,
+                "width": 1280,
+                "height": 720
+            },
+            {
+                "video_id": 2,
                 "width": 1280,
                 "height": 720
             }
