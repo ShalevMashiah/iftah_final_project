@@ -1,5 +1,6 @@
 import time
 import os
+import logging
 import cv2
 import numpy as np
 from infrastructure.interfaces.handlers.ishm_reader_handler import IShmReaderHandler
@@ -19,14 +20,14 @@ class ShmReaderHandler(IShmReaderHandler):
 
     def start(self) -> None:
         # Try GStreamer shmsrc first (caps must match writer I420 size)
-        pipeline = (
-            f"shmsrc socket-path={self._shm_path} is-live=true do-timestamp=true ! "
-            f"video/x-raw,format=I420,width={self._width},height={self._height},framerate=30/1 ! "
-            f"videoconvert ! video/x-raw,format=BGR ! "
-            f"appsink drop=true sync=false"
+        pipeline = ConstStrings.SHARED_MEMORY_READER_PIPELINE.format(
+            shared_memory_path=self._shm_path,
+            frame_width=self._width,
+            frame_height=self._height,
+            frame_rate=Consts.ALGO_FRAME_RATE,
         )
 
-        max_wait_seconds = 5
+        max_wait_seconds = Consts.SHM_OPEN_GST_WAIT_SECONDS
         for i in range(max_wait_seconds):
             self._cap = cv2.VideoCapture(pipeline, cv2.CAP_GSTREAMER)
             if self._cap.isOpened():
@@ -50,7 +51,7 @@ class ShmReaderHandler(IShmReaderHandler):
         )
         
         avi_path = f"{self._shm_path}.avi"
-        max_wait_seconds = 10
+        max_wait_seconds = Consts.SHM_OPEN_AVI_WAIT_SECONDS
         for i in range(max_wait_seconds):
             if os.path.exists(avi_path):
                 self._cap = cv2.VideoCapture(avi_path)
@@ -62,6 +63,11 @@ class ShmReaderHandler(IShmReaderHandler):
                     return
             time.sleep(1)
 
+        self._logger.log(
+            ConstStrings.LOG_NAME_ERROR,
+            f"Cannot open shm stream or file after waiting: {self._shm_path}",
+            level=logging.ERROR,
+        )
         raise TimeoutError(f"Cannot open shm stream or file after waiting: {self._shm_path}")
 
     def read_frame(self) -> np.ndarray:

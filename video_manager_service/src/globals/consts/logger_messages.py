@@ -11,7 +11,7 @@ class LoggerMessages:
     EXAMPLE_PRINT_CONSUMER_MSG = ", message is: {}"
     WRITER_NOT_OPENED = "Error: Writer not opened for video {}"
     VIDEO_OPENED = "Opened video: {}"
-    SHM_WRITER_READY = "Shared memory writer ready: /dev/shm/video{}"
+    SHM_WRITER_READY = "Shared memory writer ready: /dev/shm/cam{}"
     VIDEO_STREAMS_STARTED = "Started {} video streams"
     VIDEO_MANAGER_STOPPED = "Video manager stopped"
     SHM_FILE_REMOVED = "Removed: {}"

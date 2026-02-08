@@ -13,9 +13,9 @@ class VideoStreamHandler(IVideoStreamHandler):
     def __init__(self, video_id: int, video_path: str):
         self._video_id = video_id
         self._video_path = video_path
-        self._frame_width = 1280  # Output size for shared memory
-        self._frame_height = 720
-        self._frame_rate = 30
+        self._frame_width = Consts.ALGO_FRAME_WIDTH
+        self._frame_height = Consts.ALGO_FRAME_HEIGHT
+        self._frame_rate = Consts.ALGO_FRAME_RATE
         self._cap = None
         self._writer = None
         self._logger = LoggerFactory.get_logger_manager()
@@ -51,6 +51,8 @@ class VideoStreamHandler(IVideoStreamHandler):
         self._cap = cv2.VideoCapture(self._video_path)
         
         if not self._cap.isOpened():
+            self._logger.log(ConstStrings.LOG_NAME_ERROR,
+                             f"Cannot open video file: {self._video_path}", level=logging.ERROR)
             raise ValueError(f"Cannot open video file: {self._video_path}")
         
         self._logger.log(ConstStrings.LOG_NAME_DEBUG,
@@ -82,11 +84,13 @@ class VideoStreamHandler(IVideoStreamHandler):
             self._writer = cv2.VideoWriter(
                 shm_path,
                 cv2.VideoWriter_fourcc(*'MJPG'),
-                30,
+                self._frame_rate,
                 (self._frame_width, self._frame_height)
             )
             
         if not self._writer.isOpened():
+            self._logger.log(ConstStrings.LOG_NAME_ERROR,
+                             f"Cannot open shared memory writer for video {self._video_id}", level=logging.ERROR)
             raise ValueError(f"Cannot open shared memory writer for video {self._video_id}")
             
         self._logger.log(ConstStrings.LOG_NAME_DEBUG,

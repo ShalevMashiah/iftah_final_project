@@ -22,8 +22,8 @@ class AlgorithmManager(IAlgorithmManager):
         self._logger = LoggerFactory.get_logger_manager()
 
         # UI settings
-        self._enable_imshow = os.environ.get("ENABLE_IMSHOW", "0") == "1"
-        self._display = os.environ.get("DISPLAY", "")
+        self._enable_imshow = os.environ.get(ConstStrings.ENABLE_IMSHOW_ENV, "0") == "1"
+        self._display = os.environ.get(ConstStrings.DISPLAY_ENV, "")
         if self._enable_imshow and not self._display:
             self._logger.log(
                 ConstStrings.LOG_NAME_DEBUG,

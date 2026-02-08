@@ -373,3 +373,9 @@
 2026-02-08 08:38:27,810 - DEBUG - GStreamer pipeline: appsrc is-live=true do-timestamp=true ! video/x-raw,format=BGR,width=1280,height=720,framerate=30/1 ! videoconvert ! videoscale ! video/x-raw,format=I420,width=1280,height=720 ! shmsink socket-path=/dev/shm/cam0 sync=false wait-for-connection=false shm-size=200000000
 2026-02-08 08:38:27,822 - DEBUG - Shared memory writer ready: /dev/shm/video0
 2026-02-08 08:38:27,823 - DEBUG - Started 1 video streams
+2026-02-08 08:43:14,809 - DEBUG - Removed: shmpipe.    1.    0
+2026-02-08 08:43:14,809 - DEBUG - Removed: cam0
+2026-02-08 08:43:14,831 - DEBUG - Opened video: videos/video1.mp4
+2026-02-08 08:43:14,831 - DEBUG - GStreamer pipeline: appsrc is-live=true do-timestamp=true ! video/x-raw,format=BGR,width=1280,height=720,framerate=30/1 ! videoconvert ! videoscale ! video/x-raw,format=I420,width=1280,height=720 ! shmsink socket-path=/dev/shm/cam0 sync=false wait-for-connection=false shm-size=200000000
+2026-02-08 08:43:15,155 - DEBUG - Shared memory writer ready: /dev/shm/video0
+2026-02-08 08:43:15,155 - DEBUG - Started 1 video streams

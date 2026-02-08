@@ -1,4 +1,5 @@
 from difflib import get_close_matches
+import logging
 import xml.etree.ElementTree as ET
 from typing import Any, Dict
 
@@ -93,4 +94,9 @@ class XMLConfigManager(IConfigManager):
             tree = ET.parse(self.config_path)
             return tree.getroot()
         except ET.ParseError as e:
+            LoggerFactory.get_logger_manager().log(
+                ConstStrings.LOG_NAME_ERROR,
+                LoggerMessages.CONFIG_KEY_NOT_FOUND.format(self.config_path),
+                level=logging.ERROR,
+            )
             raise ValueError(f"{self.config_path}': {e}")
