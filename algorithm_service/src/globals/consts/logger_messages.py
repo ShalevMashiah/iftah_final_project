@@ -13,3 +13,4 @@ class LoggerMessages:
     ALGORITHM_MANAGER_STARTED = "Algorithm manager started"
     MOTION_STARTING = "Motion detection enabled"
     MOTION_ERROR = "Motion detection error: {}"
+    MOTION_REGION_COUNT = "Video {}: motion regions detected: {}"

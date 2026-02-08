@@ -8,6 +8,7 @@ from typing import List, Dict
 
 from infrastructure.interfaces.managers.ialgorithm_manager import IAlgorithmManager
 from infrastructure.factories.handler_factory import HandlerFactory
+from infrastructure.factories.algorithm_factory import AlgorithmFactory
 from infrastructure.factories.logger_factory import LoggerFactory
 from globals.consts.const_strings import ConstStrings
 from globals.consts.logger_messages import LoggerMessages
@@ -22,14 +23,17 @@ class AlgorithmManager(IAlgorithmManager):
         self._process_threads = []
         self._running = True
         self._logger = LoggerFactory.get_logger_manager()
-        self._bg_subtractors = [
-                cv2.createBackgroundSubtractorMOG2(
-                    history=Consts.MOTION_BG_HISTORY,
-                    varThreshold=Consts.MOTION_BG_VAR_THRESHOLD,
-                    detectShadows=Consts.MOTION_DETECT_SHADOWS
-            )
-            for _ in range(self._num_videos)
-        ]
+        # Initialize algorithms per video
+        self._algorithms = []
+        for video in self._videos_config:
+            algo_type = video.get("algorithm", "motion_detection")
+            algo_cfg = video.get("algorithm_config", {})
+            try:
+                algo = AlgorithmFactory.create(algo_type, algo_cfg)
+                self._algorithms.append(algo)
+            except Exception as e:
+                self._logger.log(ConstStrings.LOG_NAME_ERROR, LoggerMessages.MOTION_ERROR.format(e))
+                self._algorithms.append(None)
         
         self._logger.log(ConstStrings.LOG_NAME_DEBUG, LoggerMessages.MOTION_STARTING)
         
@@ -85,6 +89,13 @@ class AlgorithmManager(IAlgorithmManager):
             except Exception:
                 pass
 
+        for algo in getattr(self, "_algorithms", []):
+            try:
+                if algo:
+                    algo.release()
+            except Exception:
+                pass
+
         for thread in self._process_threads:
             thread.join(timeout=1)
 
@@ -120,30 +131,9 @@ class AlgorithmManager(IAlgorithmManager):
                 time.sleep(0.1)
                 continue
             try:
-                
-                subtractor = self._bg_subtractors[video_index]
-                fg = subtractor.apply(frame)
-                _, mask = cv2.threshold(fg, 244, 255, cv2.THRESH_BINARY)
-                kernel = cv2.getStructuringElement(
-                    cv2.MORPH_RECT,
-                    (Consts.MOTION_KERNEL_SIZE, Consts.MOTION_KERNEL_SIZE)
-                )
-                mask = cv2.dilate(mask, kernel, iterations=Consts.MOTION_DILATE_ITER)
-                contours, _ = cv2.findContours(mask, cv2.RETR_EXTERNAL, cv2.CHAIN_APPROX_SIMPLE)
-
-                regions = 0
-                for c in contours:
-                    if cv2.contourArea(c) < Consts.MOTION_MIN_AREA:
-                        continue
-                    x, y, w, h = cv2.boundingRect(c)
-                    cv2.rectangle(frame, (x, y), (x + w, y + h), (0, 255, 0), 2)
-                    regions += 1
-
-                if regions and frame_count % Consts.ALGO_FRAME_RATE == 0:
-                    self._logger.log(
-                        ConstStrings.LOG_NAME_DEBUG,
-                        LoggerMessages.MOTION_REGION_COUNT.format(video_index, regions)
-                    )
+                algo = self._algorithms[video_index]
+                if algo:
+                    frame = algo.process(frame)
             except Exception as e:
                 self._logger.log(ConstStrings.LOG_NAME_ERROR, LoggerMessages.MOTION_ERROR.format(e))
             
@@ -178,7 +168,7 @@ class AlgorithmManager(IAlgorithmManager):
 
             if frame is not None:
                 try:
-                    cv2.imshow(f"Video {i}", frame)
+                    cv2.imshow(f"Video {i + 1}", frame)
                 except cv2.error as e:
                     self._logger.log(
                         ConstStrings.LOG_NAME_DEBUG,

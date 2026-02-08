@@ -6,7 +6,7 @@ from model.managers.example_manager import ExampleManager
 from infrastructure.interfaces.ilogger_manager import ILoggerManager
 from infrastructure.interfaces.managers.ialgorithm_manager import IAlgorithmManager
 from model.managers.algorithm_manager import AlgorithmManager
-
+from globals.consts.consts import Consts
 
 class ManagerFactory:
     @staticmethod
@@ -25,13 +25,33 @@ class ManagerFactory:
         videos_config = [
             {
                 "video_id": 1,
-                "width": 1280,
-                "height": 720
+                "width": Consts.ALGO_FRAME_WIDTH,
+                "height": Consts.ALGO_FRAME_HEIGHT,
+                "algorithm": "motion_detection",
+                "algorithm_config": {
+                    "min_contour_area": Consts.MOTION_MIN_AREA,
+                    "threshold": Consts.MOTION_BG_VAR_THRESHOLD,
+                    "history": Consts.MOTION_BG_HISTORY,
+                    "detect_shadows": Consts.MOTION_DETECT_SHADOWS,
+                    "dilate_iterations": Consts.MOTION_DILATE_ITER,
+                    "erode_iterations": 0,
+                    "draw_bbox": True
+                }
             },
             {
                 "video_id": 2,
-                "width": 1280,
-                "height": 720
+                "width": Consts.ALGO_FRAME_WIDTH,
+                "height": Consts.ALGO_FRAME_HEIGHT,
+                "algorithm": "motion_detection",
+                "algorithm_config": {
+                    "min_contour_area": Consts.MOTION_MIN_AREA,
+                    "threshold": Consts.MOTION_BG_VAR_THRESHOLD,
+                    "history": Consts.MOTION_BG_HISTORY,
+                    "detect_shadows": Consts.MOTION_DETECT_SHADOWS,
+                    "dilate_iterations": Consts.MOTION_DILATE_ITER,
+                    "erode_iterations": 0,
+                    "draw_bbox": True
+                }
             }
         ]
         
