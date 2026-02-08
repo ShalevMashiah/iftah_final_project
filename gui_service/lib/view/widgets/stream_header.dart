@@ -1,0 +1,59 @@
+import 'package:flutter/material.dart';
+import 'package:flutter_to_do_list/domain/model/data_classes/video_stream.dart';
+
+/// Header widget for video stream displaying title, status, and motion detection
+class StreamHeader extends StatelessWidget {
+  final VideoStream stream;
+
+  const StreamHeader({
+    super.key,
+    required this.stream,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return Padding(
+      padding: const EdgeInsets.all(12.0),
+      child: Row(
+        children: [
+          Icon(
+            Icons.videocam,
+            color: stream.isActive ? Colors.green : Colors.red,
+            size: 20,
+          ),
+          const SizedBox(width: 8),
+          Text(
+            stream.title,
+            style: const TextStyle(
+              fontSize: 16,
+              fontWeight: FontWeight.bold,
+              color: Colors.white,
+            ),
+          ),
+          const Spacer(),
+          if (stream.motionDetections != null)
+            Container(
+              padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
+              decoration: BoxDecoration(
+                color: Colors.orange.withOpacity(0.2),
+                borderRadius: BorderRadius.circular(4),
+              ),
+              child: Text(
+                'Motion: ${stream.motionDetections}',
+                style: const TextStyle(color: Colors.orange, fontSize: 12),
+              ),
+            ),
+          const SizedBox(width: 8),
+          Container(
+            width: 8,
+            height: 8,
+            decoration: BoxDecoration(
+              shape: BoxShape.circle,
+              color: stream.isActive ? Colors.green : Colors.red,
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+}
