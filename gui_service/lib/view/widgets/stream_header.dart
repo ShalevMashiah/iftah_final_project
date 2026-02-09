@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_to_do_list/domain/model/data_classes/video_stream.dart';
+import 'package:flutter_to_do_list/bloc/video_streams/video_streams_bloc.dart';
+import 'package:flutter_to_do_list/bloc/video_streams/video_streams_event.dart';
 
 /// Header widget for video stream displaying title, status, and motion detection
 class StreamHeader extends StatelessWidget {
@@ -31,6 +34,22 @@ class StreamHeader extends StatelessWidget {
             ),
           ),
           const Spacer(),
+          // Record button
+          IconButton(
+            icon: Icon(
+              stream.isRecording ? Icons.stop_circle : Icons.fiber_manual_record,
+              color: stream.isRecording ? Colors.red : Colors.white,
+            ),
+            tooltip: stream.isRecording ? 'Stop Recording' : 'Start Recording',
+            onPressed: () {
+              if (stream.isRecording) {
+                context.read<VideoStreamsBloc>().add(StopRecordingEvent(stream.id));
+              } else {
+                context.read<VideoStreamsBloc>().add(StartRecordingEvent(stream.id));
+              }
+            },
+          ),
+          const SizedBox(width: 8),
           if (stream.motionDetections != null)
             Container(
               padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),

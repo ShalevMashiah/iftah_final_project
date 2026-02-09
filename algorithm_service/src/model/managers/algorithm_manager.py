@@ -4,7 +4,8 @@ from globals.consts.consts import Consts
 import threading
 import time
 from queue import Queue, Empty
-from typing import List, Dict
+from typing import List, Dict, Optional
+from datetime import datetime
 
 from infrastructure.interfaces.managers.ialgorithm_manager import IAlgorithmManager
 from infrastructure.factories.handler_factory import HandlerFactory
@@ -23,6 +24,15 @@ class AlgorithmManager(IAlgorithmManager):
         self._running = True
         self._logger = LoggerFactory.get_logger_manager()
         self._logger.log(ConstStrings.LOG_NAME_DEBUG, LoggerMessages.MOTION_STARTING)
+        
+        # Recording state
+        self._recording: List[bool] = [False] * self._num_videos
+        self._video_writers: List[Optional[cv2.VideoWriter]] = [None] * self._num_videos
+        self._recording_lock = threading.Lock()
+        
+        # Create records directory
+        os.makedirs("/app/records", exist_ok=True)
+        
         # Initialize algorithms per video
         self._algorithms = []
         for video in self._videos_config:
@@ -53,6 +63,67 @@ class AlgorithmManager(IAlgorithmManager):
         # Initialize readers
         self._init_readers()
 
+    def start_recording(self, video_index: int) -> str:
+        with self._recording_lock:
+            if self._recording[video_index]:
+                return "Already recording"
+            
+            timestamp = datetime.now().strftime("%Y/%m/%d_%H:%M:%S")
+            filename = f"/app/records/Camera_name{video_index + 1}_{timestamp}.avi"
+            
+            video_config = self._videos_config[video_index]
+            width = video_config.get("width", 1280)
+            height = video_config.get("height", 720)
+            
+            fourcc = cv2.VideoWriter_fourcc(*'XVID')
+            writer = cv2.VideoWriter(filename, fourcc, Consts.ALGO_FRAME_RATE, (width, height))
+            
+            if not writer.isOpened():
+                self._logger.log(ConstStrings.LOG_NAME_ERROR, f"Failed to start recording for stream {video_index + 1}")
+                return "Failed to start recording"
+            
+            self._video_writers[video_index] = writer
+            self._recording[video_index] = True
+            self._logger.log(ConstStrings.LOG_NAME_DEBUG, f"Started recording stream {video_index + 1} to {filename}")
+            return filename
+
+    def stop_recording(self, video_index: int) -> bool:
+        with self._recording_lock:
+            if not self._recording[video_index]:
+                return False
+            
+            writer = self._video_writers[video_index]
+            if writer:
+                writer.release()
+            
+            self._video_writers[video_index] = None
+            self._recording[video_index] = False
+            self._logger.log(ConstStrings.LOG_NAME_DEBUG, f"Stopped recording stream {video_index + 1}")
+            return True
+
+    def is_recording(self, video_index: int) -> bool:
+        return self._recording[video_index]
+
+    def _check_recording_signals(self) -> None:
+        for i in range(self._num_videos):
+            stream_id = i + 1
+            start_signal = f"/app/logs/record_start_{stream_id}.signal"
+            stop_signal = f"/app/logs/record_stop_{stream_id}.signal"
+            
+            if os.path.exists(start_signal):
+                self.start_recording(i)
+                try:
+                    os.remove(start_signal)
+                except:
+                    pass
+            
+            if os.path.exists(stop_signal):
+                self.stop_recording(i)
+                try:
+                    os.remove(stop_signal)
+                except:
+                    pass
+
     def start(self) -> None:
         # Start worker threads (read frames)
         for i in range(self._num_videos):
@@ -70,6 +141,9 @@ class AlgorithmManager(IAlgorithmManager):
         # Main loop (render from main thread)
         try:
             while self._running:
+                # Check for recording signals
+                self._check_recording_signals()
+                
                 if self._enable_imshow:
                     self._render_frames_main_thread()
                 else:
@@ -82,6 +156,11 @@ class AlgorithmManager(IAlgorithmManager):
 
     def stop(self) -> None:
         self._running = False
+
+        # Stop all recordings
+        for i in range(self._num_videos):
+            if self._recording[i]:
+                self.stop_recording(i)
 
         for reader in self._readers:
             try:
@@ -152,6 +231,15 @@ class AlgorithmManager(IAlgorithmManager):
                 cv2.imwrite(output_path, frame, [cv2.IMWRITE_JPEG_QUALITY, 85])
             except Exception as e:
                 self._logger.log(ConstStrings.LOG_NAME_DEBUG, f"Failed to save frame: {e}")
+
+            # Write to recording if active
+            if self._recording[video_index]:
+                writer = self._video_writers[video_index]
+                if writer and writer.isOpened():
+                    try:
+                        writer.write(frame)
+                    except Exception as e:
+                        self._logger.log(ConstStrings.LOG_NAME_ERROR, f"Failed to write frame to recording: {e}")
 
             q = self._frame_queues[video_index]
             if q.full():

@@ -32,6 +32,7 @@ services:
       - ENABLE_IMSHOW=1
     volumes:
       - ../logs:/app/logs
+      - ../records:/app/records
       - /dev/shm:/dev/shm
       - /tmp/.X11-unix:/tmp/.X11-unix:rw
     network_mode: host
@@ -51,6 +52,7 @@ services:
     volumes:
       - /tmp/.X11-unix:/tmp/.X11-unix:rw
       - ../logs:/app/logs
+      - ../records:/app/records
     network_mode: host
     restart: unless-stopped
 

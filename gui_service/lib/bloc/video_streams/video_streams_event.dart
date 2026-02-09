@@ -29,3 +29,13 @@ class RemoveStreamEvent extends VideoStreamsEvent {
   final String streamId;
   const RemoveStreamEvent(this.streamId);
 }
+
+class StartRecordingEvent extends VideoStreamsEvent {
+  final String streamId;
+  const StartRecordingEvent(this.streamId);
+}
+
+class StopRecordingEvent extends VideoStreamsEvent {
+  final String streamId;
+  const StopRecordingEvent(this.streamId);
+}

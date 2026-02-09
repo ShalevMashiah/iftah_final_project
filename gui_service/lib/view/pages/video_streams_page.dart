@@ -3,7 +3,8 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_to_do_list/bloc/video_streams/video_streams_bloc.dart';
 import 'package:flutter_to_do_list/bloc/video_streams/video_streams_event.dart';
 import 'package:flutter_to_do_list/bloc/video_streams/video_streams_state.dart';
-import '../widgets/video_stream_widget.dart';
+import '../widgets/streams_status_bar.dart';
+import '../widgets/streams_grid_view.dart';
 
 class VideoStreamsPage extends StatelessWidget {
   const VideoStreamsPage({super.key});
@@ -43,90 +44,18 @@ class VideoStreamsPage extends StatelessWidget {
 
           return Column(
             children: [
-              _buildStatusBar(state),
+              StreamsStatusBar(
+                totalStreams: state.streams.length,
+                activeStreams: state.activeStreams.length,
+                inactiveStreams: state.inactiveStreams.length,
+              ),
               Expanded(
-                child: Padding(
-                  padding: const EdgeInsets.all(12.0),
-                  child: LayoutBuilder(
-                    builder: (context, constraints) {
-                      final isWide = constraints.maxWidth >= 900;
-                      
-                      if (isWide) {
-                        return Row(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: streams.map((stream) {
-                            return Expanded(
-                              child: Padding(
-                                padding: const EdgeInsets.only(right: 12),
-                                child: VideoStreamWidget(stream: stream),
-                              ),
-                            );
-                          }).toList(),
-                        );
-                      } else {
-                        return SingleChildScrollView(
-                          child: Column(
-                            children: streams.map((stream) {
-                              return Padding(
-                                padding: const EdgeInsets.only(bottom: 12),
-                                child: VideoStreamWidget(stream: stream),
-                              );
-                            }).toList(),
-                          ),
-                        );
-                      }
-                    },
-                  ),
-                ),
+                child: StreamsGridView(streams: streams),
               ),
             ],
           );
         },
       ),
-    );
-  }
-
-  Widget _buildStatusBar(VideoStreamsState state) {
-    return Container(
-      padding: const EdgeInsets.all(12),
-      color: const Color(0xFF1E1E1E),
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-        children: [
-          _buildStatusItem(
-            'Total Streams',
-            state.streams.length.toString(),
-            Colors.blue,
-          ),
-          _buildStatusItem(
-            'Active',
-            state.activeStreams.length.toString(),
-            Colors.green,
-          ),
-          _buildStatusItem(
-            'Inactive',
-            state.inactiveStreams.length.toString(),
-            Colors.red,
-          ),
-        ],
-      ),
-    );
-  }
-
-  Widget _buildStatusItem(String label, String value, Color color) {
-    return Row(
-      children: [
-        Icon(Icons.circle, color: color, size: 12),
-        const SizedBox(width: 8),
-        Text(
-          '$label: $value',
-          style: TextStyle(
-            fontSize: 14,
-            fontWeight: FontWeight.bold,
-            color: color,
-          ),
-        ),
-      ],
     );
   }
 }

@@ -8,6 +8,8 @@ class VideoStream extends Equatable {
   final bool isActive;
   final DateTime? lastUpdate;
   final int? motionDetections;
+  final bool isRecording;
+  final String? recordingFilename;
 
   const VideoStream({
     required this.id,
@@ -16,6 +18,8 @@ class VideoStream extends Equatable {
     this.isActive = false,
     this.lastUpdate,
     this.motionDetections,
+    this.isRecording = false,
+    this.recordingFilename,
   });
 
   VideoStream copyWith({
@@ -25,6 +29,8 @@ class VideoStream extends Equatable {
     bool? isActive,
     DateTime? lastUpdate,
     int? motionDetections,
+    bool? isRecording,
+    String? recordingFilename,
   }) {
     return VideoStream(
       id: id ?? this.id,
@@ -33,9 +39,11 @@ class VideoStream extends Equatable {
       isActive: isActive ?? this.isActive,
       lastUpdate: lastUpdate ?? this.lastUpdate,
       motionDetections: motionDetections ?? this.motionDetections,
+      isRecording: isRecording ?? this.isRecording,
+      recordingFilename: recordingFilename ?? this.recordingFilename,
     );
   }
 
   @override
-  List<Object?> get props => [id, title, streamUrl, isActive, lastUpdate, motionDetections];
+  List<Object?> get props => [id, title, streamUrl, isActive, lastUpdate, motionDetections, isRecording, recordingFilename];
 }
