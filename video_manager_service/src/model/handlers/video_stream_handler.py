@@ -36,8 +36,15 @@ class VideoStreamHandler(IVideoStreamHandler):
                     return None
             else:
                 return None
-                
-        ret, frame = self._cap.read()
+        
+        # For RTSP, flush buffer to get latest frame
+        if self._is_rtsp:
+            # Grab and discard 1 old frame from buffer
+            self._cap.grab()
+            ret, frame = self._cap.retrieve()
+        else:
+            ret, frame = self._cap.read()
+            
         if not ret and self._is_rtsp:
             # RTSP connection lost, will retry on next call
             self._logger.log(ConstStrings.LOG_NAME_DEBUG,
@@ -56,8 +63,9 @@ class VideoStreamHandler(IVideoStreamHandler):
 
         if self._writer and self._writer.isOpened():
             self._writer.write(resized)
-            # Pace writes to approximate the configured frame rate
-            time.sleep(1.0 / max(1.0, float(self._frame_rate)))
+            # Don't sleep for RTSP to minimize latency
+            if not self._is_rtsp:
+                time.sleep(1.0 / max(1.0, float(self._frame_rate)))
         else:
             self._logger.log(ConstStrings.LOG_NAME_ERROR,
                              LoggerMessages.WRITER_NOT_OPENED.format(self._video_id), level=logging.ERROR)
@@ -89,9 +97,17 @@ class VideoStreamHandler(IVideoStreamHandler):
                 self._logger.log(ConstStrings.LOG_NAME_DEBUG,
                                f"Attempt {attempt}/{max_retries} to connect to RTSP camera: {self._video_path}")
                 
+                # Set low-latency FFMPEG options BEFORE creating VideoCapture
+                os.environ['OPENCV_FFMPEG_CAPTURE_OPTIONS'] = (
+                    'rtsp_transport;tcp|'
+                    'fflags;nobuffer|'
+                    'flags;low_delay'
+                )
+                
                 self._cap = cv2.VideoCapture(self._video_path, cv2.CAP_FFMPEG)
-                self._cap.set(cv2.CAP_PROP_BUFFERSIZE, 3)
-                os.environ['OPENCV_FFMPEG_CAPTURE_OPTIONS'] = 'rtsp_transport;tcp'
+                
+                # Minimize buffer to 2 frames for balance between latency and quality
+                self._cap.set(cv2.CAP_PROP_BUFFERSIZE, 2)
                 
                 if self._cap.isOpened():
                     self._logger.log(ConstStrings.LOG_NAME_DEBUG,
@@ -157,11 +173,23 @@ class VideoStreamHandler(IVideoStreamHandler):
     def _construct_video_writer_pipeline(self) -> str:
         shared_memory_path = ConstStrings.SHARED_MEMORY_CAM_PATH.format(camera_id=self._video_id)
 
-        return ConstStrings.SHARED_MEMORY_PIPELINE.format(
-            frame_height=Consts.ALGO_FRAME_HEIGHT,
-            frame_width=Consts.ALGO_FRAME_WIDTH,
-            frame_rate=self._frame_rate,
-            scaled_width=self._frame_width,
-            scaled_height=self._frame_height,
-            shared_memory_path=shared_memory_path,
-        )
+        # Optimized pipeline for RTSP with better quality
+        if self._is_rtsp:
+            return (
+                f"appsrc is-live=true do-timestamp=true block=false ! "
+                f"video/x-raw,format=BGR,width={self._frame_width},height={self._frame_height},framerate={self._frame_rate}/1 ! "
+                f"queue max-size-buffers=2 leaky=downstream ! "
+                f"videoconvert ! "
+                f"video/x-raw,format=I420 ! "
+                f"shmsink socket-path={shared_memory_path} sync=false wait-for-connection=false "
+                f"shm-size=50000000"
+            )
+        else:
+            return ConstStrings.SHARED_MEMORY_PIPELINE.format(
+                frame_height=Consts.ALGO_FRAME_HEIGHT,
+                frame_width=Consts.ALGO_FRAME_WIDTH,
+                frame_rate=self._frame_rate,
+                scaled_width=self._frame_width,
+                scaled_height=self._frame_height,
+                shared_memory_path=shared_memory_path,
+            )
