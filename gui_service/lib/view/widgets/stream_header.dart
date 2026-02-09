@@ -21,6 +21,7 @@ class StreamHeader extends StatelessWidget {
         children: [
           Icon(
             Icons.videocam,
+            
             color: stream.isActive ? Colors.green : Colors.red,
             size: 20,
           ),
@@ -35,18 +36,39 @@ class StreamHeader extends StatelessWidget {
           ),
           const Spacer(),
           // Record button
-          IconButton(
-            icon: Icon(
-              stream.isRecording ? Icons.stop_circle : Icons.fiber_manual_record,
-              color: stream.isRecording ? Colors.red : Colors.white,
+          // IconButton(
+          //   icon: Icon(
+          //     stream.isRecording ? Icons.stop_circle : Icons.fiber_manual_record,
+          //     color: stream.isRecording ? Colors.red : Colors.white,
+          //   ),
+          //   tooltip: stream.isRecording ? 'Stop Recording' : 'Start Recording',
+          //   onPressed: () {
+          //     if (stream.isRecording) {
+          //       context.read<VideoStreamsBloc>().add(StopRecordingEvent(stream.id));
+          //     } else {
+          //       context.read<VideoStreamsBloc>().add(StartRecordingEvent(stream.id));
+          //     }
+          //   },
+          // ),
+            ElevatedButton.icon(
+              icon: Icon(
+                stream.isRecording ? Icons.stop_circle : Icons.fiber_manual_record,
+                size: 18,
+              ),
+              label: Text(stream.isRecording ? 'Stop Recording' : 'Start Recording'),
+              style: ElevatedButton.styleFrom(
+                backgroundColor: stream.isRecording ? Colors.red : Colors.green,
+                foregroundColor: Colors.white,
+                padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
             ),
-            tooltip: stream.isRecording ? 'Stop Recording' : 'Start Recording',
             onPressed: () {
-              if (stream.isRecording) {
+              if(stream.isRecording) {
                 context.read<VideoStreamsBloc>().add(StopRecordingEvent(stream.id));
-              } else {
+              }
+              else {
                 context.read<VideoStreamsBloc>().add(StartRecordingEvent(stream.id));
               }
+
             },
           ),
           const SizedBox(width: 8),

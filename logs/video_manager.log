@@ -1564,3 +1564,45 @@
 2026-02-09 14:30:17,070 - DEBUG - GStreamer pipeline: appsrc is-live=true do-timestamp=true block=false ! video/x-raw,format=BGR,width=1280,height=720,framerate=30/1 ! queue max-size-buffers=2 leaky=downstream ! videoconvert ! video/x-raw,format=I420 ! shmsink socket-path=/dev/shm/cam3 sync=false wait-for-connection=false shm-size=50000000
 2026-02-09 14:30:17,078 - DEBUG - Shared memory writer ready: /dev/shm/cam3
 2026-02-09 14:30:17,095 - DEBUG - Started 3 video streams
+2026-02-09 14:40:59,762 - DEBUG - Removed: shmpipe.    1.    2
+2026-02-09 14:40:59,762 - DEBUG - Removed: cam3
+2026-02-09 14:40:59,763 - DEBUG - Removed: shmpipe.    1.    1
+2026-02-09 14:40:59,763 - DEBUG - Removed: cam2
+2026-02-09 14:40:59,763 - DEBUG - Removed: shmpipe.    1.    0
+2026-02-09 14:40:59,763 - DEBUG - Removed: cam1
+2026-02-09 14:40:59,763 - DEBUG - Opening video source: videos/video1.mp4
+2026-02-09 14:40:59,784 - DEBUG - Opened video: videos/video1.mp4
+2026-02-09 14:40:59,785 - DEBUG - GStreamer pipeline: appsrc is-live=true do-timestamp=true ! video/x-raw,format=BGR,width=1280,height=720,framerate=30/1 ! videoconvert ! videoscale ! video/x-raw,format=I420,width=1280,height=720 ! shmsink socket-path=/dev/shm/cam1 sync=false wait-for-connection=false shm-size=200000000
+2026-02-09 14:41:00,255 - DEBUG - Shared memory writer ready: /dev/shm/cam1
+2026-02-09 14:41:00,256 - DEBUG - Opening video source: videos/video2.mp4
+2026-02-09 14:41:00,350 - DEBUG - Opened video: videos/video2.mp4
+2026-02-09 14:41:00,350 - DEBUG - GStreamer pipeline: appsrc is-live=true do-timestamp=true ! video/x-raw,format=BGR,width=1280,height=720,framerate=30/1 ! videoconvert ! videoscale ! video/x-raw,format=I420,width=1280,height=720 ! shmsink socket-path=/dev/shm/cam2 sync=false wait-for-connection=false shm-size=200000000
+2026-02-09 14:41:00,352 - DEBUG - Shared memory writer ready: /dev/shm/cam2
+2026-02-09 14:41:00,353 - DEBUG - Opening video source: rtsp://admin:Rd123456@192.168.2.60:556/h264
+2026-02-09 14:41:00,353 - DEBUG - Attempt 1/60 to connect to RTSP camera: rtsp://admin:Rd123456@192.168.2.60:556/h264
+2026-02-09 14:41:02,063 - DEBUG - Successfully connected to RTSP camera on attempt 1
+2026-02-09 14:41:02,063 - DEBUG - Opened video: rtsp://admin:Rd123456@192.168.2.60:556/h264
+2026-02-09 14:41:02,063 - DEBUG - GStreamer pipeline: appsrc is-live=true do-timestamp=true block=false ! video/x-raw,format=BGR,width=1280,height=720,framerate=30/1 ! queue max-size-buffers=2 leaky=downstream ! videoconvert ! video/x-raw,format=I420 ! shmsink socket-path=/dev/shm/cam3 sync=false wait-for-connection=false shm-size=50000000
+2026-02-09 14:41:02,064 - DEBUG - Shared memory writer ready: /dev/shm/cam3
+2026-02-09 14:41:02,065 - DEBUG - Started 3 video streams
+2026-02-09 14:53:19,530 - DEBUG - Removed: shmpipe.    1.    2
+2026-02-09 14:53:19,530 - DEBUG - Removed: cam3
+2026-02-09 14:53:19,531 - DEBUG - Removed: shmpipe.    1.    1
+2026-02-09 14:53:19,531 - DEBUG - Removed: cam2
+2026-02-09 14:53:19,531 - DEBUG - Removed: shmpipe.    1.    0
+2026-02-09 14:53:19,531 - DEBUG - Removed: cam1
+2026-02-09 14:53:19,531 - DEBUG - Opening video source: videos/video1.mp4
+2026-02-09 14:53:19,553 - DEBUG - Opened video: videos/video1.mp4
+2026-02-09 14:53:19,554 - DEBUG - GStreamer pipeline: appsrc is-live=true do-timestamp=true ! video/x-raw,format=BGR,width=1280,height=720,framerate=30/1 ! videoconvert ! videoscale ! video/x-raw,format=I420,width=1280,height=720 ! shmsink socket-path=/dev/shm/cam1 sync=false wait-for-connection=false shm-size=200000000
+2026-02-09 14:53:19,977 - DEBUG - Shared memory writer ready: /dev/shm/cam1
+2026-02-09 14:53:19,978 - DEBUG - Opening video source: videos/video2.mp4
+2026-02-09 14:53:20,073 - DEBUG - Opened video: videos/video2.mp4
+2026-02-09 14:53:20,073 - DEBUG - GStreamer pipeline: appsrc is-live=true do-timestamp=true ! video/x-raw,format=BGR,width=1280,height=720,framerate=30/1 ! videoconvert ! videoscale ! video/x-raw,format=I420,width=1280,height=720 ! shmsink socket-path=/dev/shm/cam2 sync=false wait-for-connection=false shm-size=200000000
+2026-02-09 14:53:20,075 - DEBUG - Shared memory writer ready: /dev/shm/cam2
+2026-02-09 14:53:20,076 - DEBUG - Opening video source: rtsp://admin:Rd123456@192.168.2.60:556/h264
+2026-02-09 14:53:20,076 - DEBUG - Attempt 1/60 to connect to RTSP camera: rtsp://admin:Rd123456@192.168.2.60:556/h264
+2026-02-09 14:53:21,058 - DEBUG - Successfully connected to RTSP camera on attempt 1
+2026-02-09 14:53:21,058 - DEBUG - Opened video: rtsp://admin:Rd123456@192.168.2.60:556/h264
+2026-02-09 14:53:21,058 - DEBUG - GStreamer pipeline: appsrc is-live=true do-timestamp=true block=false ! video/x-raw,format=BGR,width=1280,height=720,framerate=30/1 ! queue max-size-buffers=2 leaky=downstream ! videoconvert ! video/x-raw,format=I420 ! shmsink socket-path=/dev/shm/cam3 sync=false wait-for-connection=false shm-size=50000000
+2026-02-09 14:53:21,059 - DEBUG - Shared memory writer ready: /dev/shm/cam3
+2026-02-09 14:53:21,060 - DEBUG - Started 3 video streams
