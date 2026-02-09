@@ -13750,3 +13750,262 @@
 2026-02-09 14:53:57,774 - DEBUG - Video 0: Read 420 frames from shared memory, shape: (720, 1280, 3)
 2026-02-09 14:53:57,871 - DEBUG - Video motion: motion regions detected: 16
 2026-02-09 14:53:57,872 - DEBUG - Video 2: Read 480 frames from shared memory, shape: (720, 1280, 3)
+2026-02-09 14:57:51,869 - DEBUG - Motion detection enabled
+2026-02-09 14:57:51,870 - DEBUG - MotionDetectionAlgorithm initialized: min_area=800 threshold=32 history=300 shadows=True
+2026-02-09 14:57:51,870 - DEBUG - MotionDetectionAlgorithm initialized: min_area=800 threshold=32 history=300 shadows=True
+2026-02-09 14:57:51,870 - DEBUG - MotionDetectionAlgorithm initialized: min_area=800 threshold=32 history=300 shadows=True
+2026-02-09 14:58:09,342 - DEBUG - Motion detection enabled
+2026-02-09 14:58:09,342 - DEBUG - MotionDetectionAlgorithm initialized: min_area=800 threshold=32 history=300 shadows=True
+2026-02-09 14:58:09,343 - DEBUG - MotionDetectionAlgorithm initialized: min_area=800 threshold=32 history=300 shadows=True
+2026-02-09 14:58:09,343 - DEBUG - MotionDetectionAlgorithm initialized: min_area=800 threshold=32 history=300 shadows=True
+2026-02-09 14:58:11,146 - DEBUG - Opened shared memory reader for video 1 (GStreamer shmsrc)
+2026-02-09 14:58:11,194 - DEBUG - Opened shared memory reader for video 2 (GStreamer shmsrc)
+2026-02-09 14:58:11,403 - DEBUG - Opened shared memory reader for video 3 (GStreamer shmsrc)
+2026-02-09 14:58:11,410 - DEBUG - Started 3 shared memory readers
+2026-02-09 14:58:13,172 - DEBUG - Video motion: motion regions detected: 9
+2026-02-09 14:58:13,172 - DEBUG - Video 2: Read 30 frames from shared memory, shape: (720, 1280, 3)
+2026-02-09 14:58:14,152 - DEBUG - Video 1: Read 30 frames from shared memory, shape: (720, 1280, 3)
+2026-02-09 14:58:14,258 - DEBUG - Video motion: motion regions detected: 7
+2026-02-09 14:58:14,258 - DEBUG - Video 0: Read 30 frames from shared memory, shape: (720, 1280, 3)
+2026-02-09 14:58:15,245 - DEBUG - Video motion: motion regions detected: 3
+2026-02-09 14:58:15,246 - DEBUG - Video 2: Read 60 frames from shared memory, shape: (720, 1280, 3)
+2026-02-09 14:58:16,271 - DEBUG - Video motion: motion regions detected: 4
+2026-02-09 14:58:16,271 - DEBUG - Video 0: Read 60 frames from shared memory, shape: (720, 1280, 3)
+2026-02-09 14:58:17,101 - DEBUG - Video motion: motion regions detected: 2
+2026-02-09 14:58:17,105 - DEBUG - Video 1: Read 60 frames from shared memory, shape: (720, 1280, 3)
+2026-02-09 14:58:17,364 - DEBUG - Video motion: motion regions detected: 15
+2026-02-09 14:58:17,364 - DEBUG - Video 2: Read 90 frames from shared memory, shape: (720, 1280, 3)
+2026-02-09 14:58:18,880 - DEBUG - Video motion: motion regions detected: 2
+2026-02-09 14:58:18,880 - DEBUG - Video 0: Read 90 frames from shared memory, shape: (720, 1280, 3)
+2026-02-09 14:58:19,279 - DEBUG - Video motion: motion regions detected: 2
+2026-02-09 14:58:19,281 - DEBUG - Video 1: Read 90 frames from shared memory, shape: (720, 1280, 3)
+2026-02-09 14:58:19,388 - DEBUG - Video motion: motion regions detected: 9
+2026-02-09 14:58:19,393 - DEBUG - Video 2: Read 120 frames from shared memory, shape: (720, 1280, 3)
+2026-02-09 14:58:21,317 - DEBUG - Video motion: motion regions detected: 10
+2026-02-09 14:58:21,317 - DEBUG - Video 0: Read 120 frames from shared memory, shape: (720, 1280, 3)
+2026-02-09 14:58:21,846 - DEBUG - Video motion: motion regions detected: 1
+2026-02-09 14:58:21,846 - DEBUG - Video 1: Read 120 frames from shared memory, shape: (720, 1280, 3)
+2026-02-09 14:58:22,009 - DEBUG - Video motion: motion regions detected: 2
+2026-02-09 14:58:22,009 - DEBUG - Video 2: Read 150 frames from shared memory, shape: (720, 1280, 3)
+2026-02-09 14:58:23,973 - DEBUG - Video motion: motion regions detected: 1
+2026-02-09 14:58:23,974 - DEBUG - Video 1: Read 150 frames from shared memory, shape: (720, 1280, 3)
+2026-02-09 14:58:24,365 - DEBUG - Video motion: motion regions detected: 6
+2026-02-09 14:58:24,365 - DEBUG - Video 0: Read 150 frames from shared memory, shape: (720, 1280, 3)
+2026-02-09 14:58:24,463 - DEBUG - Video motion: motion regions detected: 9
+2026-02-09 14:58:24,463 - DEBUG - Video 2: Read 180 frames from shared memory, shape: (720, 1280, 3)
+2026-02-09 14:58:26,556 - DEBUG - Video motion: motion regions detected: 3
+2026-02-09 14:58:26,557 - DEBUG - Video 2: Read 210 frames from shared memory, shape: (720, 1280, 3)
+2026-02-09 14:58:26,903 - DEBUG - Video motion: motion regions detected: 1
+2026-02-09 14:58:26,903 - DEBUG - Video 1: Read 180 frames from shared memory, shape: (720, 1280, 3)
+2026-02-09 14:58:27,644 - DEBUG - Video motion: motion regions detected: 3
+2026-02-09 14:58:27,644 - DEBUG - Video 0: Read 180 frames from shared memory, shape: (720, 1280, 3)
+2026-02-09 14:58:28,974 - DEBUG - Video motion: motion regions detected: 1
+2026-02-09 14:58:28,974 - DEBUG - Video 1: Read 210 frames from shared memory, shape: (720, 1280, 3)
+2026-02-09 14:58:29,096 - DEBUG - Video motion: motion regions detected: 1
+2026-02-09 14:58:29,097 - DEBUG - Video 2: Read 240 frames from shared memory, shape: (720, 1280, 3)
+2026-02-09 14:58:29,917 - DEBUG - Video motion: motion regions detected: 3
+2026-02-09 14:58:29,918 - DEBUG - Video 0: Read 210 frames from shared memory, shape: (720, 1280, 3)
+2026-02-09 14:58:31,064 - DEBUG - Video 2: Read 270 frames from shared memory, shape: (720, 1280, 3)
+2026-02-09 14:58:31,517 - DEBUG - Video motion: motion regions detected: 1
+2026-02-09 14:58:31,531 - DEBUG - Video 1: Read 240 frames from shared memory, shape: (720, 1280, 3)
+2026-02-09 14:58:32,709 - DEBUG - Video motion: motion regions detected: 1
+2026-02-09 14:58:32,709 - DEBUG - Video 2: Read 300 frames from shared memory, shape: (720, 1280, 3)
+2026-02-09 14:58:33,053 - DEBUG - Video motion: motion regions detected: 8
+2026-02-09 14:58:33,053 - DEBUG - Video 0: Read 240 frames from shared memory, shape: (720, 1280, 3)
+2026-02-09 14:58:34,305 - DEBUG - Video motion: motion regions detected: 1
+2026-02-09 14:58:34,305 - DEBUG - Video 1: Read 270 frames from shared memory, shape: (720, 1280, 3)
+2026-02-09 14:58:35,208 - DEBUG - Video 2: Read 330 frames from shared memory, shape: (720, 1280, 3)
+2026-02-09 14:58:35,611 - DEBUG - Video motion: motion regions detected: 4
+2026-02-09 14:58:35,612 - DEBUG - Video 0: Read 270 frames from shared memory, shape: (720, 1280, 3)
+2026-02-09 14:58:36,876 - DEBUG - Video motion: motion regions detected: 1
+2026-02-09 14:58:36,877 - DEBUG - Video 1: Read 300 frames from shared memory, shape: (720, 1280, 3)
+2026-02-09 14:58:37,151 - DEBUG - Video motion: motion regions detected: 1
+2026-02-09 14:58:37,151 - DEBUG - Video 2: Read 360 frames from shared memory, shape: (720, 1280, 3)
+2026-02-09 14:58:38,687 - DEBUG - Video motion: motion regions detected: 9
+2026-02-09 14:58:38,687 - DEBUG - Video 0: Read 300 frames from shared memory, shape: (720, 1280, 3)
+2026-02-09 14:58:38,985 - DEBUG - Video 2: Read 390 frames from shared memory, shape: (720, 1280, 3)
+2026-02-09 14:58:39,029 - DEBUG - Video motion: motion regions detected: 1
+2026-02-09 14:58:39,029 - DEBUG - Video 1: Read 330 frames from shared memory, shape: (720, 1280, 3)
+2026-02-09 14:58:40,785 - DEBUG - Video motion: motion regions detected: 1
+2026-02-09 14:58:40,786 - DEBUG - Video 1: Read 360 frames from shared memory, shape: (720, 1280, 3)
+2026-02-09 14:58:40,861 - DEBUG - Video 2: Read 420 frames from shared memory, shape: (720, 1280, 3)
+2026-02-09 14:58:41,689 - DEBUG - Video motion: motion regions detected: 4
+2026-02-09 14:58:41,689 - DEBUG - Video 0: Read 330 frames from shared memory, shape: (720, 1280, 3)
+2026-02-09 14:58:42,545 - DEBUG - Video 2: Read 450 frames from shared memory, shape: (720, 1280, 3)
+2026-02-09 14:58:43,220 - DEBUG - Video motion: motion regions detected: 1
+2026-02-09 14:58:43,220 - DEBUG - Video 1: Read 390 frames from shared memory, shape: (720, 1280, 3)
+2026-02-09 14:58:44,164 - DEBUG - Video motion: motion regions detected: 4
+2026-02-09 14:58:44,165 - DEBUG - Video 0: Read 360 frames from shared memory, shape: (720, 1280, 3)
+2026-02-09 14:58:44,366 - DEBUG - Video 2: Read 480 frames from shared memory, shape: (720, 1280, 3)
+2026-02-09 14:58:45,486 - DEBUG - Video motion: motion regions detected: 1
+2026-02-09 14:58:45,486 - DEBUG - Video 1: Read 420 frames from shared memory, shape: (720, 1280, 3)
+2026-02-09 14:58:46,251 - DEBUG - Video 2: Read 510 frames from shared memory, shape: (720, 1280, 3)
+2026-02-09 14:58:47,414 - DEBUG - Video motion: motion regions detected: 6
+2026-02-09 14:58:47,415 - DEBUG - Video 0: Read 390 frames from shared memory, shape: (720, 1280, 3)
+2026-02-09 14:58:47,574 - DEBUG - Video motion: motion regions detected: 2
+2026-02-09 14:58:47,574 - DEBUG - Video 1: Read 450 frames from shared memory, shape: (720, 1280, 3)
+2026-02-09 14:58:48,010 - DEBUG - Video 2: Read 540 frames from shared memory, shape: (720, 1280, 3)
+2026-02-09 14:58:49,851 - DEBUG - Video motion: motion regions detected: 1
+2026-02-09 14:58:49,852 - DEBUG - Video 1: Read 480 frames from shared memory, shape: (720, 1280, 3)
+2026-02-09 14:58:49,873 - DEBUG - Video motion: motion regions detected: 18
+2026-02-09 14:58:49,873 - DEBUG - Video 2: Read 570 frames from shared memory, shape: (720, 1280, 3)
+2026-02-09 14:58:50,337 - DEBUG - Video motion: motion regions detected: 4
+2026-02-09 14:58:50,337 - DEBUG - Video 0: Read 420 frames from shared memory, shape: (720, 1280, 3)
+2026-02-09 14:58:52,101 - DEBUG - Video motion: motion regions detected: 1
+2026-02-09 14:58:52,101 - DEBUG - Video 1: Read 510 frames from shared memory, shape: (720, 1280, 3)
+2026-02-09 14:58:52,437 - DEBUG - Video motion: motion regions detected: 18
+2026-02-09 14:58:52,437 - DEBUG - Video 2: Read 600 frames from shared memory, shape: (720, 1280, 3)
+2026-02-09 14:58:53,172 - DEBUG - Video motion: motion regions detected: 6
+2026-02-09 14:58:53,172 - DEBUG - Video 0: Read 450 frames from shared memory, shape: (720, 1280, 3)
+2026-02-09 14:58:54,252 - DEBUG - Video motion: motion regions detected: 5
+2026-02-09 14:58:54,252 - DEBUG - Video 2: Read 630 frames from shared memory, shape: (720, 1280, 3)
+2026-02-09 14:58:54,505 - DEBUG - Video motion: motion regions detected: 1
+2026-02-09 14:58:54,507 - DEBUG - Video 1: Read 540 frames from shared memory, shape: (720, 1280, 3)
+2026-02-09 14:58:55,807 - DEBUG - Video motion: motion regions detected: 1
+2026-02-09 14:58:55,808 - DEBUG - Video 2: Read 660 frames from shared memory, shape: (720, 1280, 3)
+2026-02-09 14:58:56,496 - DEBUG - Video motion: motion regions detected: 1
+2026-02-09 14:58:56,496 - DEBUG - Video 1: Read 570 frames from shared memory, shape: (720, 1280, 3)
+2026-02-09 14:58:56,550 - DEBUG - Video motion: motion regions detected: 6
+2026-02-09 14:58:56,550 - DEBUG - Video 0: Read 480 frames from shared memory, shape: (720, 1280, 3)
+2026-02-09 14:58:57,834 - DEBUG - Video motion: motion regions detected: 3
+2026-02-09 14:58:57,835 - DEBUG - Video 2: Read 690 frames from shared memory, shape: (720, 1280, 3)
+2026-02-09 14:58:58,763 - DEBUG - Video motion: motion regions detected: 1
+2026-02-09 14:58:58,763 - DEBUG - Video 1: Read 600 frames from shared memory, shape: (720, 1280, 3)
+2026-02-09 14:58:59,541 - DEBUG - Video motion: motion regions detected: 11
+2026-02-09 14:58:59,541 - DEBUG - Video 0: Read 510 frames from shared memory, shape: (720, 1280, 3)
+2026-02-09 14:58:59,802 - DEBUG - Video motion: motion regions detected: 1
+2026-02-09 14:58:59,803 - DEBUG - Video 2: Read 720 frames from shared memory, shape: (720, 1280, 3)
+2026-02-09 14:59:00,958 - DEBUG - Video motion: motion regions detected: 1
+2026-02-09 14:59:00,962 - DEBUG - Video 1: Read 630 frames from shared memory, shape: (720, 1280, 3)
+2026-02-09 14:59:01,847 - DEBUG - Video motion: motion regions detected: 1
+2026-02-09 14:59:01,850 - DEBUG - Video 2: Read 750 frames from shared memory, shape: (720, 1280, 3)
+2026-02-09 14:59:02,035 - DEBUG - Video motion: motion regions detected: 8
+2026-02-09 14:59:02,038 - DEBUG - Video 0: Read 540 frames from shared memory, shape: (720, 1280, 3)
+2026-02-09 14:59:03,342 - DEBUG - Video motion: motion regions detected: 1
+2026-02-09 14:59:03,343 - DEBUG - Video 1: Read 660 frames from shared memory, shape: (720, 1280, 3)
+2026-02-09 14:59:03,715 - DEBUG - Video motion: motion regions detected: 1
+2026-02-09 14:59:03,726 - DEBUG - Video 2: Read 780 frames from shared memory, shape: (720, 1280, 3)
+2026-02-09 14:59:04,832 - DEBUG - Video motion: motion regions detected: 8
+2026-02-09 14:59:04,833 - DEBUG - Video 0: Read 570 frames from shared memory, shape: (720, 1280, 3)
+2026-02-09 14:59:05,503 - DEBUG - Video motion: motion regions detected: 4
+2026-02-09 14:59:05,505 - DEBUG - Video 2: Read 810 frames from shared memory, shape: (720, 1280, 3)
+2026-02-09 14:59:05,612 - DEBUG - Video motion: motion regions detected: 1
+2026-02-09 14:59:05,615 - DEBUG - Video 1: Read 690 frames from shared memory, shape: (720, 1280, 3)
+2026-02-09 14:59:07,544 - DEBUG - Video motion: motion regions detected: 6
+2026-02-09 14:59:07,547 - DEBUG - Video 0: Read 600 frames from shared memory, shape: (720, 1280, 3)
+2026-02-09 14:59:07,697 - DEBUG - Video motion: motion regions detected: 6
+2026-02-09 14:59:07,697 - DEBUG - Video 2: Read 840 frames from shared memory, shape: (720, 1280, 3)
+2026-02-09 14:59:07,871 - DEBUG - Video motion: motion regions detected: 1
+2026-02-09 14:59:07,871 - DEBUG - Video 1: Read 720 frames from shared memory, shape: (720, 1280, 3)
+2026-02-09 14:59:09,760 - DEBUG - Video motion: motion regions detected: 2
+2026-02-09 14:59:09,760 - DEBUG - Video 2: Read 870 frames from shared memory, shape: (720, 1280, 3)
+2026-02-09 14:59:10,037 - DEBUG - Video motion: motion regions detected: 7
+2026-02-09 14:59:10,038 - DEBUG - Video 1: Read 750 frames from shared memory, shape: (720, 1280, 3)
+2026-02-09 14:59:10,283 - DEBUG - Video motion: motion regions detected: 6
+2026-02-09 14:59:10,283 - DEBUG - Video 0: Read 630 frames from shared memory, shape: (720, 1280, 3)
+2026-02-09 14:59:11,951 - DEBUG - Video motion: motion regions detected: 1
+2026-02-09 14:59:11,952 - DEBUG - Video 2: Read 900 frames from shared memory, shape: (720, 1280, 3)
+2026-02-09 14:59:12,318 - DEBUG - Video motion: motion regions detected: 5
+2026-02-09 14:59:12,320 - DEBUG - Video 1: Read 780 frames from shared memory, shape: (720, 1280, 3)
+2026-02-09 14:59:13,141 - DEBUG - Video motion: motion regions detected: 6
+2026-02-09 14:59:13,141 - DEBUG - Video 0: Read 660 frames from shared memory, shape: (720, 1280, 3)
+2026-02-09 14:59:13,753 - DEBUG - Video motion: motion regions detected: 1
+2026-02-09 14:59:13,754 - DEBUG - Video 2: Read 930 frames from shared memory, shape: (720, 1280, 3)
+2026-02-09 14:59:14,977 - DEBUG - Video motion: motion regions detected: 7
+2026-02-09 14:59:14,977 - DEBUG - Video 1: Read 810 frames from shared memory, shape: (720, 1280, 3)
+2026-02-09 14:59:15,448 - DEBUG - Video motion: motion regions detected: 12
+2026-02-09 14:59:15,449 - DEBUG - Video 0: Read 690 frames from shared memory, shape: (720, 1280, 3)
+2026-02-09 14:59:15,967 - DEBUG - Video motion: motion regions detected: 11
+2026-02-09 14:59:15,968 - DEBUG - Video 2: Read 960 frames from shared memory, shape: (720, 1280, 3)
+2026-02-09 14:59:17,375 - DEBUG - Video motion: motion regions detected: 1
+2026-02-09 14:59:17,375 - DEBUG - Video 1: Read 840 frames from shared memory, shape: (720, 1280, 3)
+2026-02-09 14:59:17,958 - DEBUG - Video motion: motion regions detected: 9
+2026-02-09 14:59:17,958 - DEBUG - Video 0: Read 720 frames from shared memory, shape: (720, 1280, 3)
+2026-02-09 15:15:05,086 - DEBUG - Motion detection enabled
+2026-02-09 15:15:05,088 - DEBUG - MotionDetectionAlgorithm initialized: min_area=800 threshold=32 history=300 shadows=True
+2026-02-09 15:15:05,090 - DEBUG - MotionDetectionAlgorithm initialized: min_area=800 threshold=32 history=300 shadows=True
+2026-02-09 15:15:05,092 - DEBUG - MotionDetectionAlgorithm initialized: min_area=800 threshold=32 history=300 shadows=True
+2026-02-09 15:15:07,158 - DEBUG - Opened shared memory reader for video 1 (GStreamer shmsrc)
+2026-02-09 15:15:07,206 - DEBUG - Opened shared memory reader for video 2 (GStreamer shmsrc)
+2026-02-09 15:15:07,396 - DEBUG - Opened shared memory reader for video 3 (GStreamer shmsrc)
+2026-02-09 15:15:07,398 - DEBUG - Started 3 shared memory readers
+2026-02-09 15:15:08,918 - DEBUG - Video motion: motion regions detected: 5
+2026-02-09 15:15:08,918 - DEBUG - Video 2: Read 30 frames from shared memory, shape: (720, 1280, 3)
+2026-02-09 15:15:09,263 - DEBUG - Video 1: Read 30 frames from shared memory, shape: (720, 1280, 3)
+2026-02-09 15:15:09,356 - DEBUG - Video motion: motion regions detected: 7
+2026-02-09 15:15:09,356 - DEBUG - Video 0: Read 30 frames from shared memory, shape: (720, 1280, 3)
+2026-02-09 15:15:11,211 - DEBUG - Video 2: Read 60 frames from shared memory, shape: (720, 1280, 3)
+2026-02-09 15:15:11,347 - DEBUG - Video motion: motion regions detected: 1
+2026-02-09 15:15:11,348 - DEBUG - Video 1: Read 60 frames from shared memory, shape: (720, 1280, 3)
+2026-02-09 15:15:11,461 - DEBUG - Video motion: motion regions detected: 4
+2026-02-09 15:15:11,461 - DEBUG - Video 0: Read 60 frames from shared memory, shape: (720, 1280, 3)
+2026-02-09 15:15:12,927 - DEBUG - Started recording stream 3 to /app/records/Camera_name3_2026 02 09_15:15:12.avi
+2026-02-09 15:15:13,299 - DEBUG - Video 2: Read 90 frames from shared memory, shape: (720, 1280, 3)
+2026-02-09 15:15:13,485 - DEBUG - Video motion: motion regions detected: 1
+2026-02-09 15:15:13,485 - DEBUG - Video 1: Read 90 frames from shared memory, shape: (720, 1280, 3)
+2026-02-09 15:15:13,745 - DEBUG - Video motion: motion regions detected: 2
+2026-02-09 15:15:13,745 - DEBUG - Video 0: Read 90 frames from shared memory, shape: (720, 1280, 3)
+2026-02-09 15:15:14,469 - DEBUG - Started recording stream 2 to /app/records/Camera_name2_2026 02 09_15:15:14.avi
+2026-02-09 15:15:16,094 - DEBUG - Video motion: motion regions detected: 1
+2026-02-09 15:15:16,095 - DEBUG - Video 1: Read 120 frames from shared memory, shape: (720, 1280, 3)
+2026-02-09 15:15:16,349 - DEBUG - Video motion: motion regions detected: 5
+2026-02-09 15:15:16,349 - DEBUG - Video 2: Read 120 frames from shared memory, shape: (720, 1280, 3)
+2026-02-09 15:15:16,581 - DEBUG - Video motion: motion regions detected: 3
+2026-02-09 15:15:16,582 - DEBUG - Video 0: Read 120 frames from shared memory, shape: (720, 1280, 3)
+2026-02-09 15:15:17,382 - DEBUG - Started recording stream 1 to /app/records/Camera_name1_2026 02 09_15:15:17.avi
+2026-02-09 15:15:18,577 - DEBUG - Video motion: motion regions detected: 3
+2026-02-09 15:15:18,578 - DEBUG - Video 2: Read 150 frames from shared memory, shape: (720, 1280, 3)
+2026-02-09 15:15:18,705 - DEBUG - Video motion: motion regions detected: 1
+2026-02-09 15:15:18,706 - DEBUG - Video 1: Read 150 frames from shared memory, shape: (720, 1280, 3)
+2026-02-09 15:15:19,804 - DEBUG - Video motion: motion regions detected: 7
+2026-02-09 15:15:19,805 - DEBUG - Video 0: Read 150 frames from shared memory, shape: (720, 1280, 3)
+2026-02-09 15:15:20,799 - DEBUG - Video motion: motion regions detected: 3
+2026-02-09 15:15:20,800 - DEBUG - Video 2: Read 180 frames from shared memory, shape: (720, 1280, 3)
+2026-02-09 15:15:21,674 - DEBUG - Video motion: motion regions detected: 1
+2026-02-09 15:15:21,675 - DEBUG - Video 1: Read 180 frames from shared memory, shape: (720, 1280, 3)
+2026-02-09 15:15:23,075 - DEBUG - Video motion: motion regions detected: 4
+2026-02-09 15:15:23,075 - DEBUG - Video 0: Read 180 frames from shared memory, shape: (720, 1280, 3)
+2026-02-09 15:15:23,287 - DEBUG - Video 2: Read 210 frames from shared memory, shape: (720, 1280, 3)
+2026-02-09 15:15:24,056 - DEBUG - Video motion: motion regions detected: 1
+2026-02-09 15:15:24,062 - DEBUG - Video 1: Read 210 frames from shared memory, shape: (720, 1280, 3)
+2026-02-09 15:15:25,354 - DEBUG - Video motion: motion regions detected: 1
+2026-02-09 15:15:25,354 - DEBUG - Video 2: Read 240 frames from shared memory, shape: (720, 1280, 3)
+2026-02-09 15:15:25,697 - DEBUG - Video motion: motion regions detected: 5
+2026-02-09 15:15:25,697 - DEBUG - Video 0: Read 210 frames from shared memory, shape: (720, 1280, 3)
+2026-02-09 15:15:26,307 - DEBUG - Video motion: motion regions detected: 1
+2026-02-09 15:15:26,308 - DEBUG - Video 1: Read 240 frames from shared memory, shape: (720, 1280, 3)
+2026-02-09 15:15:27,876 - DEBUG - Video motion: motion regions detected: 9
+2026-02-09 15:15:27,876 - DEBUG - Video 2: Read 270 frames from shared memory, shape: (720, 1280, 3)
+2026-02-09 15:15:28,215 - DEBUG - Video motion: motion regions detected: 1
+2026-02-09 15:15:28,215 - DEBUG - Video 1: Read 270 frames from shared memory, shape: (720, 1280, 3)
+2026-02-09 15:15:28,364 - DEBUG - Video motion: motion regions detected: 8
+2026-02-09 15:15:28,365 - DEBUG - Video 0: Read 240 frames from shared memory, shape: (720, 1280, 3)
+2026-02-09 15:15:29,914 - DEBUG - Stopped recording stream 1
+2026-02-09 15:15:30,163 - DEBUG - Video motion: motion regions detected: 9
+2026-02-09 15:15:30,163 - DEBUG - Video 2: Read 300 frames from shared memory, shape: (720, 1280, 3)
+2026-02-09 15:15:30,394 - DEBUG - Video motion: motion regions detected: 1
+2026-02-09 15:15:30,394 - DEBUG - Video 1: Read 300 frames from shared memory, shape: (720, 1280, 3)
+2026-02-09 15:15:30,645 - DEBUG - Video motion: motion regions detected: 4
+2026-02-09 15:15:30,645 - DEBUG - Video 0: Read 270 frames from shared memory, shape: (720, 1280, 3)
+2026-02-09 15:15:31,401 - DEBUG - Stopped recording stream 2
+2026-02-09 15:15:32,233 - DEBUG - Video motion: motion regions detected: 2
+2026-02-09 15:15:32,235 - DEBUG - Video 2: Read 330 frames from shared memory, shape: (720, 1280, 3)
+2026-02-09 15:15:32,401 - DEBUG - Video motion: motion regions detected: 1
+2026-02-09 15:15:32,405 - DEBUG - Video 1: Read 330 frames from shared memory, shape: (720, 1280, 3)
+2026-02-09 15:15:32,623 - DEBUG - Video motion: motion regions detected: 6
+2026-02-09 15:15:32,623 - DEBUG - Video 0: Read 300 frames from shared memory, shape: (720, 1280, 3)
+2026-02-09 15:15:32,942 - DEBUG - Stopped recording stream 3
+2026-02-09 15:15:33,938 - DEBUG - Video motion: motion regions detected: 1
+2026-02-09 15:15:33,939 - DEBUG - Video 2: Read 360 frames from shared memory, shape: (720, 1280, 3)
+2026-02-09 15:15:34,232 - DEBUG - Video motion: motion regions detected: 1
+2026-02-09 15:15:34,233 - DEBUG - Video 1: Read 360 frames from shared memory, shape: (720, 1280, 3)
+2026-02-09 15:15:34,711 - DEBUG - Video motion: motion regions detected: 4
+2026-02-09 15:15:34,712 - DEBUG - Video 0: Read 330 frames from shared memory, shape: (720, 1280, 3)
+2026-02-09 15:15:35,449 - DEBUG - Video motion: motion regions detected: 1
+2026-02-09 15:15:35,449 - DEBUG - Video 2: Read 390 frames from shared memory, shape: (720, 1280, 3)
+2026-02-09 15:15:36,142 - DEBUG - Video motion: motion regions detected: 1
+2026-02-09 15:15:36,142 - DEBUG - Video 1: Read 390 frames from shared memory, shape: (720, 1280, 3)
+2026-02-09 15:15:37,220 - DEBUG - Video motion: motion regions detected: 6
+2026-02-09 15:15:37,226 - DEBUG - Video 0: Read 360 frames from shared memory, shape: (720, 1280, 3)
+2026-02-09 15:15:37,239 - DEBUG - Video motion: motion regions detected: 10
+2026-02-09 15:15:37,239 - DEBUG - Video 2: Read 420 frames from shared memory, shape: (720, 1280, 3)

@@ -35,21 +35,6 @@ class StreamHeader extends StatelessWidget {
             ),
           ),
           const Spacer(),
-          // Record button
-          // IconButton(
-          //   icon: Icon(
-          //     stream.isRecording ? Icons.stop_circle : Icons.fiber_manual_record,
-          //     color: stream.isRecording ? Colors.red : Colors.white,
-          //   ),
-          //   tooltip: stream.isRecording ? 'Stop Recording' : 'Start Recording',
-          //   onPressed: () {
-          //     if (stream.isRecording) {
-          //       context.read<VideoStreamsBloc>().add(StopRecordingEvent(stream.id));
-          //     } else {
-          //       context.read<VideoStreamsBloc>().add(StartRecordingEvent(stream.id));
-          //     }
-          //   },
-          // ),
             ElevatedButton.icon(
               icon: Icon(
                 stream.isRecording ? Icons.stop_circle : Icons.fiber_manual_record,
