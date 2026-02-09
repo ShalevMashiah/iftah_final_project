@@ -116,7 +116,7 @@ class VideoStreamHandler(IVideoStreamHandler):
                     
                 self._logger.log(ConstStrings.LOG_NAME_DEBUG,
                                f"Failed to connect. Waiting {retry_delay} seconds before retry...")
-                time.sleep(retry_delay)
+                #time.sleep(retry_delay)
                 
             if not self._cap.isOpened():
                 error_msg = f"Cannot open RTSP camera after {max_retries} attempts: {self._video_path}"
@@ -173,16 +173,14 @@ class VideoStreamHandler(IVideoStreamHandler):
     def _construct_video_writer_pipeline(self) -> str:
         shared_memory_path = ConstStrings.SHARED_MEMORY_CAM_PATH.format(camera_id=self._video_id)
 
-        # Optimized pipeline for RTSP with better quality
         if self._is_rtsp:
-            return (
-                f"appsrc is-live=true do-timestamp=true block=false ! "
-                f"video/x-raw,format=BGR,width={self._frame_width},height={self._frame_height},framerate={self._frame_rate}/1 ! "
-                f"queue max-size-buffers=2 leaky=downstream ! "
-                f"videoconvert ! "
-                f"video/x-raw,format=I420 ! "
-                f"shmsink socket-path={shared_memory_path} sync=false wait-for-connection=false "
-                f"shm-size=50000000"
+            return ConstStrings.SHARED_MEMORY_PIPELINE_RTSP.format(
+                frame_width=self._frame_width,
+                frame_height=self._frame_height,
+                frame_rate=self._frame_rate,
+                queue_max_buffers=Consts.GSTREAMER_QUEUE_MAX_BUFFERS,
+                shared_memory_path=shared_memory_path,
+                shm_size=Consts.GSTREAMER_SHM_SIZE,
             )
         else:
             return ConstStrings.SHARED_MEMORY_PIPELINE.format(

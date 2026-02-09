@@ -6,3 +6,7 @@ class Consts:
     ALGO_FRAME_HEIGHT = 720
     # Target frame rate for SHM writer
     ALGO_FRAME_RATE = 30
+    
+    # GStreamer pipeline configuration for RTSP
+    GSTREAMER_QUEUE_MAX_BUFFERS = 2
+    GSTREAMER_SHM_SIZE = 50000000  # 50MB

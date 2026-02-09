@@ -80,3 +80,14 @@ class ConstStrings:
         "videoconvert ! "
         "appsink drop=true sync=false"
     )
+    
+    # Low-latency GStreamer pipeline for RTSP streams
+    SHARED_MEMORY_PIPELINE_RTSP = (
+        "appsrc is-live=true do-timestamp=true block=false ! "
+        "video/x-raw,format=BGR,width={frame_width},height={frame_height},framerate={frame_rate}/1 ! "
+        "queue max-size-buffers={queue_max_buffers} leaky=downstream ! "
+        "videoconvert ! "
+        "video/x-raw,format=I420 ! "
+        "shmsink socket-path={shared_memory_path} sync=false wait-for-connection=false "
+        "shm-size={shm_size}"
+    )
