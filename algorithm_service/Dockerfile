@@ -52,4 +52,7 @@ RUN pip install --no-cache-dir --upgrade pip wheel && \
 
 COPY . .
 
+# Create logs directory with proper permissions
+RUN mkdir -p /app/logs && chmod -R 777 /app/logs
+
 CMD ["python", "src/main.py"]

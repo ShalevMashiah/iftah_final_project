@@ -26,6 +26,12 @@ class VideoStreamsBloc extends Bloc<VideoStreamsEvent, VideoStreamsState> {
           streamUrl: '/app/logs/stream_2.jpg',
           isActive: true,
         ),
+        const VideoStream(
+          id: '3',
+          title: 'Video Stream 3',
+          streamUrl: '/app/logs/stream_3.jpg',
+          isActive: true,
+        ),
       ];
       emit(VideoStreamsLoaded(streams));
     });

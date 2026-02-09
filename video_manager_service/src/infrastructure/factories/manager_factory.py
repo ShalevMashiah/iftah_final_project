@@ -18,6 +18,10 @@ class ManagerFactory:
                         {
                 "video_id": 2,
                 "video_path": "videos/video2.mp4"
+            },
+            {
+                "video_id": 3,
+                "video_path": "rtsp://admin:Rd123456@192.168.2.60:556/h264"
             }
         ]
         

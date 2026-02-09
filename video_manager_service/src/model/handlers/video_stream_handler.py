@@ -20,9 +20,31 @@ class VideoStreamHandler(IVideoStreamHandler):
         self._cap = None
         self._writer = None
         self._logger = LoggerFactory.get_logger_manager()
+        self._is_rtsp = video_path.startswith("rtsp://")
 
     def read_frame(self) -> ndarray:
+        if not self._cap or not self._cap.isOpened():
+            # Try to reconnect for RTSP streams
+            if self._is_rtsp:
+                self._logger.log(ConstStrings.LOG_NAME_DEBUG,
+                                f"RTSP stream disconnected, attempting reconnect: {self._video_path}")
+                try:
+                    self._init_capture()
+                except Exception as e:
+                    self._logger.log(ConstStrings.LOG_NAME_ERROR,
+                                   f"Failed to reconnect RTSP: {e}", level=logging.ERROR)
+                    return None
+            else:
+                return None
+                
         ret, frame = self._cap.read()
+        if not ret and self._is_rtsp:
+            # RTSP connection lost, will retry on next call
+            self._logger.log(ConstStrings.LOG_NAME_DEBUG,
+                           f"Lost RTSP connection for video {self._video_id}")
+            if self._cap:
+                self._cap.release()
+            return None
         return frame if ret else None
 
     def write_frame(self, frame: ndarray) -> None:
@@ -51,12 +73,45 @@ class VideoStreamHandler(IVideoStreamHandler):
         self._init_writer()
 
     def _init_capture(self) -> None:
-        self._cap = cv2.VideoCapture(self._video_path)
+        # Release existing capture if any
+        if self._cap:
+            self._cap.release()
+            
+        self._logger.log(ConstStrings.LOG_NAME_DEBUG,
+                        f"Opening video source: {self._video_path}")
         
-        if not self._cap.isOpened():
-            self._logger.log(ConstStrings.LOG_NAME_ERROR,
-                             f"Cannot open video file: {self._video_path}", level=logging.ERROR)
-            raise ValueError(f"Cannot open video file: {self._video_path}")
+        # For RTSP streams, retry with timeout
+        if self._is_rtsp:
+            max_retries = 60  # 60 attempts
+            retry_delay = 5   # 5 seconds between attempts
+            
+            for attempt in range(1, max_retries + 1):
+                self._logger.log(ConstStrings.LOG_NAME_DEBUG,
+                               f"Attempt {attempt}/{max_retries} to connect to RTSP camera: {self._video_path}")
+                
+                self._cap = cv2.VideoCapture(self._video_path, cv2.CAP_FFMPEG)
+                self._cap.set(cv2.CAP_PROP_BUFFERSIZE, 3)
+                os.environ['OPENCV_FFMPEG_CAPTURE_OPTIONS'] = 'rtsp_transport;tcp'
+                
+                if self._cap.isOpened():
+                    self._logger.log(ConstStrings.LOG_NAME_DEBUG,
+                                   f"Successfully connected to RTSP camera on attempt {attempt}")
+                    break
+                    
+                self._logger.log(ConstStrings.LOG_NAME_DEBUG,
+                               f"Failed to connect. Waiting {retry_delay} seconds before retry...")
+                time.sleep(retry_delay)
+                
+            if not self._cap.isOpened():
+                error_msg = f"Cannot open RTSP camera after {max_retries} attempts: {self._video_path}"
+                self._logger.log(ConstStrings.LOG_NAME_ERROR, error_msg, level=logging.ERROR)
+                raise ValueError(error_msg)
+        else:
+            self._cap = cv2.VideoCapture(self._video_path)
+            if not self._cap.isOpened():
+                error_msg = f"Cannot open video file: {self._video_path}"
+                self._logger.log(ConstStrings.LOG_NAME_ERROR, error_msg, level=logging.ERROR)
+                raise ValueError(error_msg)
         
         self._logger.log(ConstStrings.LOG_NAME_DEBUG,
                          LoggerMessages.VIDEO_OPENED.format(self._video_path))

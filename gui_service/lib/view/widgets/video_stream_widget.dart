@@ -24,8 +24,8 @@ class _VideoStreamWidgetState extends State<VideoStreamWidget> {
   @override
   void initState() {
     super.initState();
-    // Refresh at 30 FPS to match algorithm service output
-    _refreshTimer = Timer.periodic(const Duration(milliseconds: 33), (_) {
+    // Refresh at ~20 FPS for smoother playback (50ms interval)
+    _refreshTimer = Timer.periodic(const Duration(milliseconds: 50), (_) {
       if (mounted) {
         setState(() {
           _frameKey++;
