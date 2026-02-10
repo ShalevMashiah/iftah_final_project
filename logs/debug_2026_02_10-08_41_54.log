@@ -1,0 +1,4 @@
+2026-02-10 08:41:54,392 - DEBUG - Motion detection enabled
+2026-02-10 08:41:54,392 - DEBUG - MotionDetectionAlgorithm initialized: min_area=800 threshold=32 history=300 shadows=True
+2026-02-10 08:41:54,393 - DEBUG - MotionDetectionAlgorithm initialized: min_area=800 threshold=32 history=300 shadows=True
+2026-02-10 08:41:54,393 - DEBUG - MotionDetectionAlgorithm initialized: min_area=800 threshold=32 history=300 shadows=True
