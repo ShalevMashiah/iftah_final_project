@@ -55,3 +55,6 @@ services:
     restart: unless-stopped
 
   
+#sudo pkill -9 -f src/main.py
+#sudo pkill -9 -f flutter_to_do_list
+#docker compose up -d --build
