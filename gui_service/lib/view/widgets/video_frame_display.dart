@@ -1,5 +1,6 @@
 import 'dart:io';
 import 'dart:typed_data';
+import 'dart:ui' as ui;
 import 'package:flutter/material.dart';
 
 /// Displays a single video frame with automatic refresh and frame caching
@@ -18,7 +19,7 @@ class VideoFrameDisplay extends StatefulWidget {
 }
 
 class _VideoFrameDisplayState extends State<VideoFrameDisplay> {
-  Uint8List? _lastSuccessfulFrame;
+  ui.Image? _lastImage;
   bool _isLoading = true;
   bool _isLoadingFrame = false;
 
@@ -37,43 +38,46 @@ class _VideoFrameDisplayState extends State<VideoFrameDisplay> {
   }
 
   void _loadFrame() {
-    // Prevent concurrent reads
     if (_isLoadingFrame) return;
-    
     _isLoadingFrame = true;
-    
-    // Read file synchronously to avoid delays
-    try {
-      final file = File(widget.imagePath);
-      if (file.existsSync()) {
-        final bytes = file.readAsBytesSync();
-        if (bytes.isNotEmpty && mounted) {
+
+    () async {
+      try {
+        final file = File(widget.imagePath);
+        if (!await file.exists()) return;
+        final bytes = await file.readAsBytes();
+        if (bytes.isEmpty || !mounted) return;
+
+        // Decode image using engine (non-blocking to Dart UI thread)
+        final codec = await ui.instantiateImageCodec(bytes);
+        final frameInfo = await codec.getNextFrame();
+        final ui.Image image = frameInfo.image;
+
+        // Dispose previous image to avoid leaks
+        _lastImage?.dispose();
+
+        if (mounted) {
           setState(() {
-            _lastSuccessfulFrame = bytes;
+            _lastImage = image;
             _isLoading = false;
           });
+        } else {
+          image.dispose();
         }
+      } catch (e) {
+        // ignore errors and keep last image
+      } finally {
+        _isLoadingFrame = false;
       }
-    } catch (e) {
-      // Keep showing last successful frame on error
-      // Don't change state if we have a cached frame
-    } finally {
-      _isLoadingFrame = false;
-    }
+    }();
   }
 
   @override
   Widget build(BuildContext context) {
-    if (_lastSuccessfulFrame != null) {
-      return Image.memory(
-        _lastSuccessfulFrame!,
+    if (_lastImage != null) {
+      return RawImage(
+        image: _lastImage,
         fit: BoxFit.contain,
-        gaplessPlayback: true,
-        filterQuality: FilterQuality.low, // Faster rendering
-        errorBuilder: (context, error, stackTrace) {
-          // Even on decode error, keep showing the widget (will use last frame)
-          return Container(color: Colors.black);
-        },
       );
     }
 
@@ -94,5 +98,11 @@ class _VideoFrameDisplayState extends State<VideoFrameDisplay> {
     }
 
     return Container(color: Colors.black);
+  }
+
+  @override
+  void dispose() {
+    _lastImage?.dispose();
+    super.dispose();
   }
 }

@@ -30,8 +30,10 @@ services:
       - DISPLAY=${DISPLAY}
       - QT_X11_NO_MITSHM=1
       - ENABLE_IMSHOW=1
+      - RECORDS_DIR=/app/records
     volumes:
       - ../logs:/app/logs
+      - ../records:/app/records
       - /dev/shm:/dev/shm
       - /tmp/.X11-unix:/tmp/.X11-unix:rw
     network_mode: host
@@ -49,8 +51,10 @@ services:
       - NO_AT_BRIDGE=1
       - LIBGL_ALWAYS_SOFTWARE=1
     volumes:
-      - /tmp/.X11-unix:/tmp/.X11-unix:rw
       - ../logs:/app/logs
+      - ../records:/app/records
+      - /dev/shm:/dev/shm
+      - /tmp/.X11-unix:/tmp/.X11-unix:rw
     network_mode: host
     restart: unless-stopped
 

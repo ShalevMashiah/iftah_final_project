@@ -1,9 +1,11 @@
 import 'dart:async';
+import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:flutter_to_do_list/domain/model/data_classes/video_stream.dart';
 import 'stream_header.dart';
 import 'stream_status_widget.dart';
 import 'video_frame_display.dart';
+import 'shm_video_player.dart';
 
 class VideoStreamWidget extends StatefulWidget {
   final VideoStream stream;
@@ -69,12 +71,21 @@ class _VideoStreamWidgetState extends State<VideoStreamWidget> {
       child: Container(
         color: Colors.black,
         child: widget.stream.isActive
-            ? VideoFrameDisplay(
-                imagePath: widget.stream.streamUrl,
-                frameKey: _frameKey,
-              )
+            ? _buildActiveContent()
             : const StreamInactiveWidget(),
       ),
     );
+  }
+
+  Widget _buildActiveContent() {
+    final url = widget.stream.streamUrl;
+    final file = File(url);
+    if (file.existsSync()) {
+      return ShmVideoPlayer(path: url);
+    }
+
+    // Fallback: try the legacy JPG frame path used previously in the project
+    final fallbackImage = '/app/logs/stream_${widget.stream.id}.jpg';
+    return VideoFrameDisplay(imagePath: fallbackImage, frameKey: _frameKey);
   }
 }

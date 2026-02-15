@@ -18,19 +18,20 @@ class VideoStreamsBloc extends Bloc<VideoStreamsEvent, VideoStreamsState> {
         const VideoStream(
           id: '1',
           title: 'Video Stream 1',
-          streamUrl: '/app/logs/stream_1.jpg',
+          // Prefer AVI fallback produced by video manager: /dev/shm/cam1.avi
+          streamUrl: '/dev/shm/cam1.avi',
           isActive: true,
         ),
         const VideoStream(
           id: '2',
           title: 'Video Stream 2',
-          streamUrl: '/app/logs/stream_2.jpg',
+          streamUrl: '/dev/shm/cam2.avi',
           isActive: true,
         ),
         const VideoStream(
           id: '3',
           title: 'Video Stream 3',
-          streamUrl: '/app/logs/stream_3.jpg',
+          streamUrl: '/dev/shm/cam3.avi',
           isActive: true,
         ),
       ];
