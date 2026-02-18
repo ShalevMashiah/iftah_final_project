@@ -61,7 +61,6 @@ class VideoManager(IVideoManager):
             video_id = video.get("video_id")
             video_path = video.get("video_path")
             
-            # Create handler using factory (SAME pattern as example)
             video_handler = HandlerFactory.create_video_stream_handler(
                 video_id, video_path
             )
@@ -76,8 +75,7 @@ class VideoManager(IVideoManager):
             if frame is None:
                 continue
             
-            # In the example, they process with algorithm here
-            # For you, just write directly to shared memory
+
             handler.write_frame(frame)
 
     def _remove_shared_memory_files(self) -> None:
