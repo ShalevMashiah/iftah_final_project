@@ -20,10 +20,10 @@ class VideoManager(IVideoManager):
         self._running = True
         self._logger = LoggerFactory.get_logger_manager()
         
-        # Clean up shared memory files (SAME as example)
+        # Clean up shared memory files 
         self._remove_shared_memory_files()
         
-        # Initialize video handlers (SAME as example's _init_video_capture)
+        # Initialize video handlers 
         self._init_video_handlers()
 
     def start(self) -> None:

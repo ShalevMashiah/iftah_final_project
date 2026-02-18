@@ -30,7 +30,7 @@ class RecordingManager:
             if self._recording[video_index]:
                 return "Already recording"
 
-            timestamp = datetime.now().strftime("%Y%m%d_%H-%M-%S")
+            timestamp = datetime.now().strftime("%Y%m%d_%H%M%S")
             filename = f"/app/records/Camera_name{video_index + 1}_{timestamp}.avi"
 
             cfg = self._videos_config[video_index]
