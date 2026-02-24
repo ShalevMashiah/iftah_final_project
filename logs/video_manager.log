@@ -3029,3 +3029,23 @@
 2026-02-18 08:39:28,145 - DEBUG - GStreamer pipeline: appsrc is-live=true do-timestamp=true block=false ! video/x-raw,format=BGR,width=1280,height=720,framerate=30/1 ! queue max-size-buffers=2 leaky=downstream ! videoconvert ! video/x-raw,format=I420 ! shmsink socket-path=/dev/shm/cam3 sync=false wait-for-connection=false shm-size=50000000
 2026-02-18 08:39:28,146 - DEBUG - Shared memory writer ready: /dev/shm/cam3
 2026-02-18 08:39:28,147 - DEBUG - Started 3 video streams
+2026-02-22 09:38:17,284 - DEBUG - Removed: shmpipe.    1.    2
+2026-02-22 09:38:17,284 - DEBUG - Removed: cam3
+2026-02-22 09:38:17,284 - DEBUG - Removed: shmpipe.    1.    1
+2026-02-22 09:38:17,284 - DEBUG - Removed: cam2
+2026-02-22 09:38:17,285 - DEBUG - Removed: shmpipe.    1.    0
+2026-02-22 09:38:17,285 - DEBUG - Removed: cam1
+2026-02-22 09:38:17,285 - DEBUG - Opening video source: videos/video1.mp4
+2026-02-22 09:38:17,334 - DEBUG - Opened video: videos/video1.mp4
+2026-02-22 09:38:17,334 - DEBUG - GStreamer pipeline: appsrc is-live=true do-timestamp=true ! video/x-raw,format=BGR,width=1280,height=720,framerate=30/1 ! videoconvert ! videoscale ! video/x-raw,format=I420,width=1280,height=720 ! shmsink socket-path=/dev/shm/cam1 sync=false wait-for-connection=false shm-size=200000000
+2026-02-22 09:38:18,080 - DEBUG - Shared memory writer ready: /dev/shm/cam1
+2026-02-22 09:38:18,081 - DEBUG - Opening video source: videos/video2.mp4
+2026-02-22 09:38:18,163 - DEBUG - Opened video: videos/video2.mp4
+2026-02-22 09:38:18,163 - DEBUG - GStreamer pipeline: appsrc is-live=true do-timestamp=true ! video/x-raw,format=BGR,width=1280,height=720,framerate=30/1 ! videoconvert ! videoscale ! video/x-raw,format=I420,width=1280,height=720 ! shmsink socket-path=/dev/shm/cam2 sync=false wait-for-connection=false shm-size=200000000
+2026-02-22 09:38:18,165 - DEBUG - Shared memory writer ready: /dev/shm/cam2
+2026-02-22 09:38:18,165 - DEBUG - Opening video source: rtsp://admin:Rd123456@192.168.2.60:556/h264
+2026-02-22 09:38:18,166 - DEBUG - Attempt 1/60 to connect to RTSP camera: rtsp://admin:Rd123456@192.168.2.60:556/h264
+2026-02-22 09:38:48,229 - DEBUG - Failed to connect. Waiting 5 seconds before retry...
+2026-02-22 09:38:48,229 - DEBUG - Attempt 2/60 to connect to RTSP camera: rtsp://admin:Rd123456@192.168.2.60:556/h264
+2026-02-22 09:39:18,293 - DEBUG - Failed to connect. Waiting 5 seconds before retry...
+2026-02-22 09:39:18,293 - DEBUG - Attempt 3/60 to connect to RTSP camera: rtsp://admin:Rd123456@192.168.2.60:556/h264

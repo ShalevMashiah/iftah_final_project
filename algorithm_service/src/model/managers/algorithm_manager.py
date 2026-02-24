@@ -13,131 +13,101 @@ from infrastructure.factories.logger_factory import LoggerFactory
 from globals.consts.const_strings import ConstStrings
 from globals.consts.logger_messages import LoggerMessages
 
-from model.managers.recording_manager import RecordingManager
-from model.managers.recording_signal_watcher import RecordingSignalWatcher
-
 
 class AlgorithmManager(IAlgorithmManager):
+
     def __init__(self, videos_config: List[Dict]) -> None:
         self._videos_config = videos_config
         self._num_videos = len(videos_config)
 
         self._readers = []
         self._algorithms = []
-
-        self._process_threads: List[threading.Thread] = []
+        self._process_threads = []
         self._running = True
 
         self._logger = LoggerFactory.get_logger_manager()
         self._logger.log(ConstStrings.LOG_NAME_DEBUG, LoggerMessages.MOTION_STARTING)
 
-        # UI settings
-        self._enable_imshow = os.environ.get(ConstStrings.ENABLE_IMSHOW_ENV, "0") == "1"
-        self._display = os.environ.get(ConstStrings.DISPLAY_ENV, "")
-        if self._enable_imshow and not self._display:
-            self._logger.log(
-                ConstStrings.LOG_NAME_DEBUG,
-                "ENABLE_IMSHOW=1 but DISPLAY is empty. Disabling imshow to avoid crash."
-            )
-            self._enable_imshow = False
+        self._enable_imshow = self._require_env(ConstStrings.ENABLE_IMSHOW_ENV) == "1"
+        self._display = self._require_env(ConstStrings.DISPLAY_ENV)
 
-        # One queue per video - holds latest frames
-        self._frame_queues: List[Queue] = [Queue(maxsize=2) for _ in range(self._num_videos)]
+        self._queue_size = int(self._require_env("ALGO_QUEUE_SIZE"))
+        self._max_none_count = int(self._require_env("ALGO_MAX_NONE_COUNT"))
+        self._none_sleep_sec = float(self._require_env("ALGO_NONE_SLEEP_SEC"))
+        self._render_sleep_sec = float(self._require_env("ALGO_RENDER_SLEEP_SEC"))
+        self._render_fps = int(self._require_env("ALGO_RENDER_FPS"))
+        self._window_prefix = self._require_env("ALGO_WINDOW_PREFIX")
 
-        # Initialize readers + algorithms
+        self._output_dir = self._require_env("ALGO_OUTPUT_DIR")
+        self._save_jpeg = self._require_env("ALGO_SAVE_JPEG") == "1"
+        self._jpeg_quality = int(self._require_env("ALGO_JPEG_QUALITY"))
+        self._jpeg_name_pattern = self._require_env("ALGO_JPEG_NAME_PATTERN")
+
+        if self._save_jpeg:
+            os.makedirs(self._output_dir)
+
+        self._frame_queues = [
+            Queue(maxsize=self._queue_size)
+            for _ in range(self._num_videos)
+        ]
+
         self._init_readers()
         self._init_algorithms()
 
-        # Recording split
-        self._recorder = RecordingManager(self._videos_config)
-        self._signal_watcher = RecordingSignalWatcher(self._num_videos, self._recorder)
-
+    def _require_env(self, key: str) -> str:
+        value = os.environ.get(key)
+        if value is None:
+            raise RuntimeError(f"Missing required ENV variable: {key}")
+        return value
 
     def start(self) -> None:
-        # Start worker threads
         for i in range(self._num_videos):
             thread = threading.Thread(
-                target=self._process_frames_worker, args=(i,), daemon=True
+                target=self._process_frames_worker,
+                args=(i,),
+                daemon=True
             )
             self._process_threads.append(thread)
             thread.start()
 
-        self._logger.log(
-            ConstStrings.LOG_NAME_DEBUG,
-            f"Started {self._num_videos} shared memory readers"
-        )
-
-        # Main loop (render from main thread)
-        try:
-            while self._running:
-                # Check record start/stop signals
-                self._signal_watcher.tick()
-
-                if self._enable_imshow:
-                    self._render_frames_main_thread()
-                else:
-                    time.sleep(0.1)
-
-        except KeyboardInterrupt:
-            self.stop()
-        finally:
+        while self._running:
             if self._enable_imshow:
-                cv2.destroyAllWindows()
+                self._render_frames_main_thread()
+            else:
+                time.sleep(self._render_sleep_sec)
 
     def stop(self) -> None:
         self._running = False
 
-        # Stop recordings
-        for i in range(self._num_videos):
-            try:
-                self._recorder.stop_recording(i)
-            except Exception:
-                pass
-
-        # Release readers
         for reader in self._readers:
-            try:
-                reader.release()
-            except Exception:
-                pass
+            reader.release()
 
-        # Release algos
-        for algo in getattr(self, "_algorithms", []):
-            try:
-                if algo:
-                    algo.release()
-            except Exception:
-                pass
+        for algo in self._algorithms:
+            if algo:
+                algo.release()
 
-        # Join threads
         for thread in self._process_threads:
-            thread.join(timeout=1)
+            thread.join()
 
         self._logger.log(ConstStrings.LOG_NAME_DEBUG, LoggerMessages.ALGORITHM_MANAGER_STOPPED)
 
-    # ===== Internal =====
-
     def _init_readers(self) -> None:
         for video in self._videos_config:
-            video_id = video.get("video_id")
-            width = video.get("width", 1280)
-            height = video.get("height", 720)
-
-            reader = HandlerFactory.create_shm_reader_handler(video_id, width, height)
+            reader = HandlerFactory.create_shm_reader_handler(
+                video["video_id"],
+                video["width"],
+                video["height"]
+            )
             self._readers.append(reader)
             reader.start()
 
     def _init_algorithms(self) -> None:
         for video in self._videos_config:
-            algo_type = video.get("algorithm", "motion_detection")
-            algo_cfg = video.get("algorithm_config", {})
-
-            try:
-                algo = AlgorithmFactory.create(algo_type, algo_cfg)
-                self._algorithms.append(algo)
-            except Exception as e:
-                self._logger.log(ConstStrings.LOG_NAME_ERROR, LoggerMessages.MOTION_ERROR.format(e))
-                self._algorithms.append(None)
+            algo = AlgorithmFactory.create(
+                video["algorithm"],
+                video["algorithm_config"]
+            )
+            self._algorithms.append(algo)
 
     def _process_frames_worker(self, video_index: int) -> None:
         reader = self._readers[video_index]
@@ -146,62 +116,35 @@ class AlgorithmManager(IAlgorithmManager):
 
         frame_count = 0
         consecutive_none_count = 0
-        max_none_count = 10
 
         while self._running:
             frame = reader.read_frame()
 
             if frame is None:
                 consecutive_none_count += 1
-                if consecutive_none_count >= max_none_count:
-                    self._logger.log(
-                        ConstStrings.LOG_NAME_DEBUG,
-                        f"Video {video_index}: No more frames available. Total frames read: {frame_count}"
-                    )
+                if consecutive_none_count >= self._max_none_count:
                     self._running = False
                     break
-
-                time.sleep(0.1)
+                time.sleep(self._none_sleep_sec)
                 continue
 
             consecutive_none_count = 0
             frame_count += 1
 
-            # Algorithm processing
-            try:
-                if algo:
-                    frame = algo.process(frame)
-            except Exception as e:
-                self._logger.log(ConstStrings.LOG_NAME_ERROR, LoggerMessages.MOTION_ERROR.format(e))
+            if algo:
+                frame = algo.process(frame)
 
-            if frame_count % 30 == 0:
-                try:
-                    self._logger.log(
-                        ConstStrings.LOG_NAME_DEBUG,
-                        f"Video {video_index}: Read {frame_count} frames from shared memory, shape: {frame.shape}"
-                    )
-                except Exception:
-                    pass
+            if self._save_jpeg:
+                filename = self._jpeg_name_pattern.format(index=video_index + 1)
+                output_path = os.path.join(self._output_dir, filename)
+                cv2.imwrite(output_path, frame, [cv2.IMWRITE_JPEG_QUALITY, self._jpeg_quality])
 
-            # Save latest frame as JPEG for GUI display
-            try:
-                output_path = f"/app/logs/stream_{video_index + 1}.jpg"
-                cv2.imwrite(output_path, frame, [cv2.IMWRITE_JPEG_QUALITY, 85])
-            except Exception as e:
-                self._logger.log(ConstStrings.LOG_NAME_DEBUG, f"Failed to save frame: {e}")
-
-            # Recording (split manager)
-            try:
-                self._recorder.write_frame_if_recording(video_index, frame)
-            except Exception as e:
-                self._logger.log(ConstStrings.LOG_NAME_ERROR, f"Failed to write frame to recording: {e}")
-
-            # Keep only latest in queue
             if q.full():
                 try:
                     q.get_nowait()
                 except Empty:
                     pass
+
             try:
                 q.put_nowait(frame)
             except Exception:
@@ -212,7 +155,6 @@ class AlgorithmManager(IAlgorithmManager):
             q = self._frame_queues[i]
             frame = None
 
-            # drain to latest
             try:
                 while True:
                     frame = q.get_nowait()
@@ -220,16 +162,7 @@ class AlgorithmManager(IAlgorithmManager):
                 pass
 
             if frame is not None:
-                try:
-                    cv2.imshow(f"Video {i + 1}", frame)
-                except cv2.error as e:
-                    self._logger.log(
-                        ConstStrings.LOG_NAME_DEBUG,
-                        f"cv2.imshow failed: {e}. Disabling imshow."
-                    )
-                    self._enable_imshow = False
-                    cv2.destroyAllWindows()
-                    break
+                cv2.imshow(f"{self._window_prefix} {i + 1}", frame)
 
         if self._enable_imshow:
-            cv2.waitKey(max(1, int(1000 / max(1, Consts.ALGO_FRAME_RATE))))
+            cv2.waitKey(int(1000 / self._render_fps))

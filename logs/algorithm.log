@@ -33674,3 +33674,13 @@
 2026-02-18 08:40:34,846 - DEBUG - Video 0: Read 1020 frames from shared memory, shape: (720, 1280, 3)
 2026-02-18 08:40:34,933 - DEBUG - Video motion: motion regions detected: 1
 2026-02-18 08:40:34,934 - DEBUG - Video 2: Read 1440 frames from shared memory, shape: (720, 1280, 3)
+2026-02-22 09:38:17,643 - DEBUG - Motion detection enabled
+2026-02-22 09:38:18,344 - DEBUG - Motion detection enabled
+2026-02-22 09:38:19,099 - DEBUG - Motion detection enabled
+2026-02-22 09:38:19,978 - DEBUG - Motion detection enabled
+2026-02-22 09:38:21,274 - DEBUG - Motion detection enabled
+2026-02-22 09:38:23,375 - DEBUG - Motion detection enabled
+2026-02-22 09:38:27,083 - DEBUG - Motion detection enabled
+2026-02-22 09:38:34,031 - DEBUG - Motion detection enabled
+2026-02-22 09:38:47,340 - DEBUG - Motion detection enabled
+2026-02-22 09:39:13,460 - DEBUG - Motion detection enabled

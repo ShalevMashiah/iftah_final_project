@@ -4,12 +4,14 @@ services:
       context: ../video_manager_service
       dockerfile: Dockerfile
     container_name: video-manager
+    env_file:
+      - .env
     environment:
-      - VIDEO_SOURCE=/app/videos/video1.mp4
-      - VIDEO_WIDTH=640
-      - VIDEO_HEIGHT=480
-      - VIDEO_SHM_PATH=/dev/shm/video0
-      - LOG_FILE_PATH=/app/logs/video_manager.log
+      - VIDEO_SOURCE=${VIDEO_SOURCE}
+      - VIDEO_WIDTH=${VIDEO_WIDTH}
+      - VIDEO_HEIGHT=${VIDEO_HEIGHT}
+      - VIDEO_SHM_PATH=${VIDEO_SHM_PATH}
+      - LOG_FILE_PATH=${VIDEO_MANAGER_LOG_FILE_PATH}
     volumes:
       - ../videos:/app/videos:ro
       - ../logs:/app/logs
@@ -25,15 +27,26 @@ services:
     container_name: algorithm-service
     depends_on:
       - video-manager
+    env_file:
+      - .env
     environment:
-      - LOG_FILE_PATH=/app/logs/algorithm.log
+      - LOG_FILE_PATH=${ALGO_LOG_FILE_PATH}
       - DISPLAY=${DISPLAY}
-      - QT_X11_NO_MITSHM=1
-      - ENABLE_IMSHOW=1
-      - RECORDS_DIR=/app/records
+      - QT_X11_NO_MITSHM=${QT_X11_NO_MITSHM}
+      - ENABLE_IMSHOW=${ENABLE_IMSHOW}
+      # The rest is read directly from ENV by the code:
+      - ALGO_QUEUE_SIZE=${ALGO_QUEUE_SIZE}
+      - ALGO_MAX_NONE_COUNT=${ALGO_MAX_NONE_COUNT}
+      - ALGO_NONE_SLEEP_SEC=${ALGO_NONE_SLEEP_SEC}
+      - ALGO_RENDER_SLEEP_SEC=${ALGO_RENDER_SLEEP_SEC}
+      - ALGO_RENDER_FPS=${ALGO_RENDER_FPS}
+      - ALGO_WINDOW_PREFIX=${ALGO_WINDOW_PREFIX}
+      - ALGO_OUTPUT_DIR=${ALGO_OUTPUT_DIR}
+      - ALGO_SAVE_JPEG=${ALGO_SAVE_JPEG}
+      - ALGO_JPEG_QUALITY=${ALGO_JPEG_QUALITY}
+      - ALGO_JPEG_NAME_PATTERN=${ALGO_JPEG_NAME_PATTERN}
     volumes:
       - ../logs:/app/logs
-      - ../records:/app/records
       - /dev/shm:/dev/shm
       - /tmp/.X11-unix:/tmp/.X11-unix:rw
     network_mode: host
@@ -44,21 +57,17 @@ services:
       context: ../gui_service
       dockerfile: Dockerfile
     container_name: gui-service
+    env_file:
+      - .env
     environment:
       - DISPLAY=${DISPLAY}
-      - QT_X11_NO_MITSHM=1
+      - QT_X11_NO_MITSHM=${QT_X11_NO_MITSHM}
       - XDG_RUNTIME_DIR=/tmp/runtime-root
       - NO_AT_BRIDGE=1
       - LIBGL_ALWAYS_SOFTWARE=1
     volumes:
       - ../logs:/app/logs
-      - ../records:/app/records
       - /dev/shm:/dev/shm
       - /tmp/.X11-unix:/tmp/.X11-unix:rw
     network_mode: host
     restart: unless-stopped
-
-  
-#sudo pkill -9 -f src/main.py
-#sudo pkill -9 -f flutter_to_do_list
-#docker compose up -d --build
